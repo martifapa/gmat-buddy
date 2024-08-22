@@ -1,0 +1,16 @@
+services:
+  backend:
+    build:
+      context: ./server
+    env_file:
+      - ./server/.env
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build:
+      context: ./client
+    ports:
+      - "80:80"
