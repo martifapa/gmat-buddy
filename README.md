@@ -31,3 +31,19 @@ To build and run the application, follow these steps:
    ```bash
    git clone https://github.com/your-username/your-repository.git
    cd your-repository
+
+2. **Create a .env file with the GROW apikey:**
+
+    Inside the server/ directory create a .env file with the GROQ_API_KEY="your_api_key"
+
+3. **Dockerize the application:**
+
+    ```bash
+    docker-compose build
+    ```
+
+4. **Run the application:**
+
+    ```bash
+    docker-compose up
+    ```
