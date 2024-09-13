@@ -1,7 +1,11 @@
 export interface Question {
     id: number,
     question: string,
-    answer?: string,
+    answers: string[],
+    type: string,
+    correct: string,
+    explanation: string,
+    difficulty: string,
 }
 
 export interface QuestionState {

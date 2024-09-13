@@ -1,9 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Root from "../components/Root";
-import QuestionDetail from "../components/QuestionDetail";
-import CustomQuestion from "../components/CustomQuestion";
-import QuestionList from "../components/QuestionList";
+import Root from "../modules/Root";
+import QuestionDetail from "../modules/questionList/components/QuestionDetail";
+import CustomQuestion from "../modules/customQuestion/components/CustomQuestion";
+import QuestionList from "../modules/questionList/components/QuestionList";
+import Login from "../modules/login/components/Login";
+import Register from "../modules/register/components/Register";
+import Settings from "../modules/settings/components/Settings";
 
 
 const router = createBrowserRouter([
@@ -22,6 +25,18 @@ const router = createBrowserRouter([
             {
                 path: 'custom',
                 element: <CustomQuestion />
+            },
+            {
+                path: 'login',
+                element: <Login />
+            },
+            {
+                path: 'register',
+                element: <Register />
+            },
+            {
+                path: 'settings',
+                element: <Settings />
             }
         ],
     }

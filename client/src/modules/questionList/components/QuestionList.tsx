@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../common/hooks";
-
+import { useAppSelector } from "../../../common/hooks/redux";
 
 const QuestionList = () => {
     const questions = useAppSelector(state => state.questions.questionBank);

@@ -7,7 +7,7 @@ const solveQuestion = async (question: string): Promise<string> => {
         `${BASE_URL}/question`,
         { question }
     );
-    
+    console.log('SERVICE', response.data)
     return response.data.answer;
 };
 
