@@ -3,6 +3,8 @@ import useQuestionDetail from "../hooks/useQuestionDetail";
 import { Spinner } from "../../../components/spinner/spinner";
 import { useEffect, useState } from "react";
 
+import styles from '../styles/QuestionList.module.css';
+
 
 const QuestionDetail = () => {
     const { id } = useParams();
@@ -48,27 +50,27 @@ const QuestionDetail = () => {
         </div>
     }
 
-    return (<div className="questionDetail">
-        <h2 className="title">Question</h2>
-        <fieldset>
-            <p>{ question.question}</p>
-            { question.answers.map((option, idx) => 
+    return (<div className={styles['question-detail']}>
+        <h2 className={styles.title}>Question</h2>
+        <div>
+            <p className={styles.question}>{question.question}</p>
+            {question.answers.map((option, idx) => 
                 <button 
-                    onClick={ () => handleSelectAnswer(idx) } key={ idx }
-                    className={`questionAnswer ${setClassNames(idx, selected, answer)}`}
+                    onClick={ () => handleSelectAnswer(idx) } key={idx}
+                    className={`${styles['question-answer']} ${setClassNames(idx, selected, answer)}`}
                 >{ option }</button>
-            ) }
-            <div className="questionNavigate">
+            )}
+            <div className={styles['question-navigate']}>
                 <button onClick={ () => navigateToQuestion(questionId - 1) }>Previous</button>
                 <button onClick={ () => navigateToQuestion(questionId + 1) }>Next</button>
             </div>
-        </fieldset>
-        <div className="buttons">
+        </div>
+        <div className={styles.buttons}>
             <button onClick={ solveQuestion }>Solve</button>
             { explanation !== '' && <button onClick={ getNewAnswer }>New explanation</button> }
         </div>
         { loading && <Spinner /> }
-        <p className="ai-answer">{ explanation }</p>
+        <p className={styles["ai-answer"]}>{explanation}</p>
     </div>);
 };
 
