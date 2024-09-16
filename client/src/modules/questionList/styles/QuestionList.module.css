@@ -94,3 +94,38 @@ h2 {
 .filter-button:active {
     background-color: var(--deep-blue);
 }
+
+/* QUESTION LIST ITEM */
+.question-item {
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: 1px solid var(--light-blue);
+    transition: transform .2 ease-in;
+}
+
+.question-item:hover {
+    transform: scale(1.01);
+}
+
+.question-header {
+    display: flex;
+    gap: 20px;
+}
+
+.question-header p {
+    position: relative;
+}
+
+.question-header p:first-child {
+    font-weight: 600;
+}
+.question-header p:first-child::after {
+    content: '/';
+    font-weight: 500;
+    position: absolute;
+    right: -10px;
+}
+
+.question-text {
+    
+}

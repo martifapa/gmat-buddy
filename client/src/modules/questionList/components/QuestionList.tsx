@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../common/hooks/redux";
 import QuestionFilters from "./QuestionFilters";
 import { useState } from "react";
+import QuestionListItem from "./QuestionListItem";
 
 
 const QuestionList = () => {
@@ -27,9 +28,13 @@ const QuestionList = () => {
         />
         <div className="questionList">
             {filteredQuestions.map(question => {
-                return (<div key={question.id} className="questionPrompt">
-                    <Link to={`question/${question.id}`}>{question.question}</Link>
-                </div>);
+                return <QuestionListItem 
+                    key={question.id}
+                    id={question.id}
+                    question={question.question}
+                    type={question.type}
+                    difficulty={question.difficulty}
+                />;
             })}
         </div>
     </div>
