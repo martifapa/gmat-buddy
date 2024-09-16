@@ -33,7 +33,25 @@ h2 {
 }
 
 .active-filter {
+    position: relative;
     cursor: pointer;
+}
+
+.active-filter.active::after {
+    content: '*';
+    position: absolute;
+    top: -3px;
+    font-weight: 700;
+    color: var(--base-blue);
+}
+.active-filter.active::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 110%;
+    text-align: end;
+    border-bottom: 2px solid var(--base-blue);
 }
 
 .dropdown {
@@ -57,16 +75,22 @@ h2 {
     background-color: var(--light-blue);
 }
 
-button {
-    margin-inline: auto;
-    margin-top: 5px;
-    padding: 8px 20px;
+.dropdown p.selected {
+    border: 1px solid var(--deep-blue);
+}
+
+.filter-button {
+    padding: 4px 12px;
     border-radius: 4px;
     background-color: var(--light-blue);
     cursor: pointer;
 }
 
-button:hover {
+.filter-button:hover {
     background-color: var(--base-blue);
     color: var(--white);
+}
+
+.filter-button:active {
+    background-color: var(--deep-blue);
 }
