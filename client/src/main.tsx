@@ -6,7 +6,7 @@ import store from './redux/store.ts';
 import router from './routes/router.tsx';
 
 import './common/reset.css';
-import './common/index.css';
+import './common/globals.css';
 
 
 createRoot(document.getElementById('root')!).render(

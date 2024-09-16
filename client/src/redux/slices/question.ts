@@ -13,7 +13,7 @@ const initialState: QuestionState = {
             type: "Verbal Reasoning - Sentence Correction",
             correct: "A",
             explanation: "",
-            difficulty: ""
+            difficulty: "Easy"
             },
         {
             id: 1,
@@ -24,7 +24,7 @@ const initialState: QuestionState = {
             type: "Verbal Reasoning - Critical Reasoning",
             correct: "B",
             explanation: "",
-            difficulty: ""
+            difficulty: "Medium"
         }
     ],
 };

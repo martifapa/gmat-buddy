@@ -22,6 +22,13 @@
   background-color: var(--light-grey);
 }
 
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
 /* NAVBAR */
 .navbar {
   height: 100px;
