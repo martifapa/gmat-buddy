@@ -1,14 +1,12 @@
-import React, { SyntheticEvent, useState } from "react";
-import { useAppDispatch } from "../../../common/hooks/redux";
-import { addQuestion } from "../../../redux/slices/question";
+import React from "react";
 import { showToastMessage } from "../../../common/utils";
-import useCustomQuestion from "../hooks/useCustomQuestion";
+import { useAppDispatch } from "../../../common/hooks/redux";
+import { useCustomAnswers, useAutoResizeTextArea, useCustomQuestion } from "../hooks";
+import { addQuestion } from "../../../redux/slices/question";
 import { Spinner } from "../../../components/spinner/spinner";
-import useAutoResizeTextArea from "../hooks/useAutoResizeTextArea";
+import CustomAnswer from "./CustomAnswer";
 
 import styles from "../styles/CustomQuestion.module.css";
-import CustomAnswer from "./CustomAnswer";
-import useCustomAnswers from "../hooks/useCustomAnswers";
 
 
 const CustomQuestion = () => {
