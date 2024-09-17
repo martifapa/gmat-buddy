@@ -40,6 +40,7 @@ export default function useQuestionDetail(id: number) {
   const navigateToQuestion = (idx: number) => {
     setExplanation('');
     setAnswer(-1);
+    setLoading(false);
     navigate(`/question/${idx}`);
   }
 

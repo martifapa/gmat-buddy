@@ -72,6 +72,7 @@ const QuestionDetail = () => {
             { explanation !== '' && <button onClick={ getNewAnswer }>New explanation</button> }
         </div>
         { loading && <Spinner /> }
+        { explanation && <h3 className={styles.subtitle}>Explanation</h3>}
         <p className={styles["ai-answer"]}>{explanation}</p>
     </div>);
 };
