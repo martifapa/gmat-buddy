@@ -22,6 +22,16 @@
   background-color: var(--light-grey);
 }
 
+p::selection,
+h1::selection,
+h2::selection,
+h3::selection,
+a::selection,
+button::selection {
+  color: var(--white);
+  background-color: var(--base-blue);
+}
+
 .flex-container {
   display: flex;
   flex-direction: column;

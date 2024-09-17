@@ -38,6 +38,8 @@ export default function useQuestionDetail(id: number) {
   }
 
   const navigateToQuestion = (idx: number) => {
+    setExplanation('');
+    setAnswer(-1);
     navigate(`/question/${idx}`);
   }
 
@@ -51,11 +53,3 @@ export default function useQuestionDetail(id: number) {
     loading
   }
 };
-
-const letterToIndex = {
-  a: 0,
-  b: 1,
-  c: 2,
-  d: 3,
-  e: 4,
-}

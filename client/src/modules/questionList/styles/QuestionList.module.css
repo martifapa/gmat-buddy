@@ -138,7 +138,7 @@ h2 {
     align-items: center;
     gap: 30px;
     background-color: var(--white);
-    box-shadow: 0 0 5px var(--deep-blue);
+    box-shadow: 0 0 5px var(--light-blue);
     border-radius: 8px;
 }
 
@@ -204,7 +204,8 @@ h2 {
 .question-answer {
     width: 90%;
     cursor: pointer;
-    border: 1px solid var(--dark-grey);
+    box-shadow: 0 0 2px var(--dark-grey);
+    border: 1px solid transparent;
     border-radius: 8px;
     padding: 6px 10px;
     margin: 5px 0;

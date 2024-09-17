@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../common/hooks/redux";
 import QuestionFilters from "./QuestionFilters";
 import { useState } from "react";
