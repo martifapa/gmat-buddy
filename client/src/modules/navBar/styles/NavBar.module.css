@@ -1,0 +1,81 @@
+@import '../../../common/globals.css';
+
+
+.navbar {
+    height: 100px;
+    padding: 0 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark);
+    color: var(--white);
+}
+
+.logo span {
+    font-weight: 600;
+    color: var(--deep-blue);
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-transform: uppercase;
+}
+
+.navigation li {
+    transition: color .2s;
+}
+
+.navigation li:hover:not(.profile) {
+    color: var(--deep-blue);
+}
+
+.profile {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    padding: 7px;
+    border: 1px solid var(--light-grey);
+    border-radius: 50%;
+    background-color: var(--base-blue);
+    text-align: center;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    width: max-content;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 5%;
+    padding: 4px;
+    background-color: var(--light-grey);
+    box-shadow: 0 0 5px var(--light-blue);
+    border-radius: 8px;
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 6px;
+    text-transform: none;
+    color: var(--dark);
+}
+
+.dropdown-content a {
+    border-radius: 4px;
+    padding: 4px 14px;
+    width: 100%;
+    display: flex;
+    gap: 8px;
+}
+
+.dropdown-content a > img {
+    max-height: 20px;
+    max-width: 20px;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--light-blue);
+}  

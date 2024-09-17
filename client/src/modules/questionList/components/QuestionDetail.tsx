@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useQuestionDetail from "../hooks/useQuestionDetail";
 import { Spinner } from "../../../components/spinner/spinner";
+import { setClassNames } from "../../../common/utils";
 
 import styles from '../styles/QuestionList.module.css';
 
@@ -28,21 +29,6 @@ const QuestionDetail = () => {
     const handleSelectAnswer = (id: number) => {
         solveQuestion();
         setSelected(id);
-    };
-
-    const setClassNames = (id: number, selected: number, correct: number ) => {
-        if (correct !== -1) { // Question already solved
-            if (correct === id) {
-                return 'correct';
-            } else if (correct !== id && id === selected) {
-                return 'incorrect';
-            }
-        } else { // Question not solved yet
-            if (id === selected) {
-                return 'selected';
-            }
-        }
-        return ''; // No class applies
     };
 
     if (question === undefined) {

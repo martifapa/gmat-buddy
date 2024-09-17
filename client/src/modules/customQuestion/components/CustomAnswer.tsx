@@ -5,11 +5,12 @@ interface Props {
     id: number,
     text: string,
     deleteAnswer: (id:number) => void,
+    correct: boolean,
 }
 
-export default function CustomAnswer({ id, text, deleteAnswer }: Props) {
+export default function CustomAnswer({ id, text, deleteAnswer, correct }: Props) {
   return (
-    <div className={styles.answer}>
+    <div className={`${styles.answer} ${correct ? styles.correct : ''}`}>
         <p>{text}</p>
         <button
             className={styles.delete}

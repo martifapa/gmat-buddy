@@ -4,26 +4,37 @@ import { getNewAnswer, solveQuestion } from '../../../services/question';
 
 export default function useCustomQuestion() {
   const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState(-1);
+  const [explanation, setExplanation] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSolveQuestion = async () => {
+  const parseFullQuestion = (question: string, answers: string[]) => {
+    const indexedAnswers = answers.map((a, idx) => {
+      return [idx, a].join(' ');
+    });
+    
+    return question + '\n\n' + indexedAnswers.join('\n');
+  }
+
+  const handleSolveQuestion = async (answers: string[]) => {
     setLoading(true);
-    const answer = await solveQuestion(question);
-    setAnswer(answer);
+    const { answerIdx, explanation } = await solveQuestion(parseFullQuestion(question, answers));
+    setAnswer(answerIdx);
+    setExplanation(explanation);
     setLoading(false);
   }
 
   const handleNewAnswer = async () => {
     setLoading(true);
-    const newAnswer = await getNewAnswer(question, answer);
-    setAnswer(newAnswer);
+    const { explanation: newExplanation } = await getNewAnswer(question, explanation);
+    setExplanation(newExplanation);
     setLoading(false);
   }
 
-  const handleClearAnswer = () => { 
-    setAnswer('');
+  const handleClearAnswer = () => {
+    setAnswer(-1);
     setQuestion('');
+    setExplanation('');
   }
   
   return {
@@ -31,6 +42,7 @@ export default function useCustomQuestion() {
     getNewAnswer: handleNewAnswer,
     clearAnswer: handleClearAnswer,
     answer,
+    explanation,
     question,
     setQuestion,
     loading,

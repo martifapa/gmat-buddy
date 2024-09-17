@@ -1,26 +1,28 @@
 import { Link } from "react-router-dom";
 import useToggle from "../hooks/useToggle";
 
+import style from "../styles/NavBar.module.css";
+
 
 const Navbar = () => {
     const [toggleState, { toggle }] = useToggle();
 
-    return (<div className="navbar">
-        <p className="logo"><Link to="/"><span>GMAT</span> assistant</Link></p>
-        <ul className="navigation">
+    return (<div className={style.navbar}>
+        <p className={style.logo}><Link to="/"><span>GMAT</span> assistant</Link></p>
+        <ul className={style.navigation}>
             <li><Link to="/">List</Link></li>
             <li><Link to="custom">Custom</Link></li>
-            <li className="profile" onClick={toggle}>
-                <img src="/public/avatar.svg" alt="Avatar icon" className="profile-icon" />
+            <li className={style.profile} onClick={toggle}>
+                <img src="/avatar.svg" alt="Avatar icon" className={style['profile-icon']} />
                 {toggleState && (
-                    <div className="profile-dropdown">
-                        <div className="dropdown-content">
+                    <div className={style['profile-dropdown']}>
+                        <div className={style['dropdown-content']}>
                             <Link to="login">
-                                <img src="/public/logout.svg" alt="Log out icon" />
+                                <img src="/logout.svg" alt="Log out icon" />
                                 <p>Log out</p>
                             </Link>
                             <Link to="settings">
-                                <img src="/public/settings.svg" alt="Settings icon" />
+                                <img src="/settings.svg" alt="Settings icon" />
                                 <p>Settings</p>
                             </Link>
                         </div>

@@ -3,6 +3,8 @@ import QuestionFilters from "./QuestionFilters";
 import { useState } from "react";
 import QuestionListItem from "./QuestionListItem";
 
+import styles from '../styles/QuestionList.module.css';
+
 
 const QuestionList = () => {
     const questions = useAppSelector(state => state.questions.questionBank);
@@ -18,14 +20,14 @@ const QuestionList = () => {
     });
 
     return (
-    <div className='flex-container'>
+    <div className={styles['flex-container']}>
         <QuestionFilters
             activeType={selectedType}
             activeDifficulty={selectedDifficulty}
             setSelectedType={setSelectedType}
             setSelectedDifficulty={setSelectedDifficulty}
         />
-        <div className="questionList">
+        <div className={styles['question-list']}>
             {filteredQuestions.map(question => {
                 return <QuestionListItem 
                     key={question.id}

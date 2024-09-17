@@ -17,6 +17,7 @@ const CustomQuestion = () => {
         getNewAnswer,
         clearAnswer,
         answer,
+        explanation,
         question,
         setQuestion,
         loading,
@@ -38,16 +39,15 @@ const CustomQuestion = () => {
     }
 
     const handleSaveQuestion = () => {
-        dispatch(addQuestion({
-            question
-        }));
+        dispatch(addQuestion({ question, answers }));
         showToastMessage('Question saved correctly')
     }
 
-    return (<div className={styles['question-detail']}>
+    return (
+    <div className={styles['question-detail']}>
         <h2 className={styles.title}>Custom question solver</h2>
         <fieldset>
-            <p>Write the question you wish to solve</p>
+            <p>Write the question you want to solve or save</p>
             <textarea
                 className={`${styles.input} ${styles['question-input']}`}
                 onChange={handleInputChange}
@@ -63,6 +63,7 @@ const CustomQuestion = () => {
                     id={idx}
                     text={savedAnswer}
                     deleteAnswer={deleteAnswer}
+                    correct={answer === idx}
                 />
             )}
         </div>
@@ -84,18 +85,20 @@ const CustomQuestion = () => {
             </div>
         </fieldset>
         <div className={styles.buttons}>
-            <button onClick={solveQuestion}>Solve</button>
-            { answer !== '' && <button onClick={getNewAnswer}>New answer</button> }
+            <button onClick={ () => solveQuestion(answers) }>Solve</button>
+            { explanation !== '' && <button onClick={getNewAnswer}>New answer</button> }
             <button onClick={clearAnswer}>Clear</button>
-            <button onClick={handleSaveQuestion}>Save</button>
+            <button
+                onClick={handleSaveQuestion}
+                className={answers.length === 5 && question ? '' : styles.disabled}
+            >Save</button>
         </div>
-    
-        <div className={styles['answer-wrapper']}>
-            { loading && <Spinner /> }
-            { answer && <p className={styles.subtitle}>AI answer</p> }
-            <p>{answer}</p>
-        </div>
-    </div>);
+
+        { loading && <Spinner /> }
+        { explanation && <p className={styles.subtitle}>Explanation</p> }
+        <p>{explanation}</p>
+    </div>
+    );
 };
 
 
