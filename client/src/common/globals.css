@@ -27,7 +27,8 @@ h1::selection,
 h2::selection,
 h3::selection,
 a::selection,
-button::selection {
+button::selection,
+textarea::selection {
   color: var(--white);
   background-color: var(--base-blue);
 }

@@ -1,16 +1,5 @@
-:root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-  
-    --white: white;
-    --dark: #303030;
-    --dark-grey: #4f4f4f;
-    --light-grey: #f5f5f5;
-    --deep-blue: #0058ff;
-    --base-blue: #0087f8;
-    --light-blue: #81c9ff;
-}
+@import '../../../common/globals.css';
+
 
 .form-container {
     border: 3px solid var(--dark-grey);
