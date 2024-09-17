@@ -274,6 +274,7 @@ h2 {
 
 .buttons button:hover {
     background-color: var(--deep-blue);
+    color: var(--white);
 }
 
 .subtitle {
