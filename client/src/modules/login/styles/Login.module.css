@@ -12,22 +12,22 @@
     gap: 20px;
 }
 
-h2 {
+.title {
     font-size: 1.6rem;
 }
 
-form {
+.user-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-label {
+.label {
     display: flex;
     flex-direction: column;
 }
 
-label input {
+.label input {
     border: 1px solid var(--light-blue);
     border-radius: 4px;
     padding: 4px 8px;

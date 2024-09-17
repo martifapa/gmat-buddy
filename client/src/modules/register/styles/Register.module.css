@@ -12,11 +12,11 @@
     gap: 20px;
 }
 
-h2 {
+.title {
     font-size: 1.6rem;
 }
 
-form {
+.user-form {
     display: flex;
     flex-direction: column;
     gap: 15px;

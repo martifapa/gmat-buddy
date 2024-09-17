@@ -13,8 +13,8 @@ export default function Login() {
 
   return (
     <div className={styles['form-container']}>
-        <h2>Welcome back!</h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className={styles.title}>Welcome back!</h2>
+        <form onSubmit={handleSubmit} className={styles['user-form']}>
             <Input label='Email' type='text' />
             <Input label='Password' type='password' />
             <input type="submit" value="Login" />

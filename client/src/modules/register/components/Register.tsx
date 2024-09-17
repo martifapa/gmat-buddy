@@ -1,5 +1,6 @@
 import { SyntheticEvent } from 'react';
 import Input from '../../../components/input/Input';
+
 import styles from '../styles/Register.module.css';
 
 
@@ -12,8 +13,8 @@ export default function Register() {
     
   return (
     <div className={styles['form-container']}>
-        <h2>Welcome aboard!</h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className={styles.title}>Welcome aboard!</h2>
+        <form onSubmit={handleSubmit} className={styles['user-form']}>
             <Input label='Username' type='text' />
             <Input label='Email' type='email' />
             <Input label='Password' type='password' />
