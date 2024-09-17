@@ -12,3 +12,8 @@ export interface QuestionState {
     status: string,
     questionBank: Question[],
 }
+
+export interface AiAnswer {
+    answerIdx: number,
+    explanation: string,
+}

@@ -10,27 +10,21 @@ export default function useQuestionDetail(id: number) {
   const [explanation, setExplanation] = useState('');
   const [answer, setAnswer] = useState(-1);
 
-  const processExplanation = async (explanation: string) => {
-    // Extract correct answer option (A to E)
-    const answerLetter = explanation.match(/\([A-E]\)/);
-    if (answerLetter) {
-      const letter = answerLetter[0].slice(1, -1).toLowerCase() as keyof typeof letterToIndex;
-      const answerIdx = letterToIndex[letter];
-      setAnswer(answerIdx);
-    }
-    setExplanation(explanation);
-  }
-
   const parseFullQuestion = () => {
-    return question?.question + '\n' + question?.answers.join('\n')
+    const indexedAnswers = question?.answers.map((a, idx) => {
+      return [idx, a].join(' ');
+    });
+    
+    return question?.question + '\n\n' + indexedAnswers?.join('\n')
   }
 
   const handleSolveQuestion = async () => {
     if (!question?.question) return;
 
     setLoading(true);
-    const explanation = await solveQuestion(parseFullQuestion());
-    await processExplanation(explanation);
+    const { answerIdx, explanation } = await solveQuestion(parseFullQuestion());
+    setAnswer(answerIdx);
+    setExplanation(explanation);
     setLoading(false);
   } 
 
@@ -38,8 +32,8 @@ export default function useQuestionDetail(id: number) {
     if (!question?.question) return;
     
     setLoading(true);
-    const newExplanation = await getNewAnswer(parseFullQuestion(), explanation);
-    await processExplanation(newExplanation);
+    const { explanation: newExplanation } = await getNewAnswer(parseFullQuestion(), explanation);
+    setExplanation(newExplanation);
     setLoading(false);
   }
 
