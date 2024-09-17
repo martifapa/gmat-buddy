@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { useAppDispatch } from "../../../common/hooks/redux";
 import { addQuestion } from "../../../redux/slices/question";
 import { showToastMessage } from "../../../common/utils";
@@ -6,9 +6,14 @@ import useCustomQuestion from "../hooks/useCustomQuestion";
 import { Spinner } from "../../../components/spinner/spinner";
 import useAutoResizeTextArea from "../hooks/useAutoResizeTextArea";
 
+import styles from "../styles/CustomQuestion.module.css";
+import CustomAnswer from "./CustomAnswer";
+import useCustomAnswers from "../hooks/useCustomAnswers";
+
 
 const CustomQuestion = () => {
     const dispatch = useAppDispatch();
+
     const {
         solveQuestion,
         getNewAnswer,
@@ -18,7 +23,17 @@ const CustomQuestion = () => {
         setQuestion,
         loading,
     } = useCustomQuestion();
-    const textareaRef = useAutoResizeTextArea();
+
+    const {
+        answers,
+        newAnswer,
+        setNewAnswer,
+        addAnswer,
+        deleteAnswer,
+    } = useCustomAnswers();
+
+    const questionTextareaRef = useAutoResizeTextArea();
+    const answerTextareaRef = useAutoResizeTextArea();
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setQuestion(event.target.value);
@@ -31,37 +46,55 @@ const CustomQuestion = () => {
         showToastMessage('Question saved correctly')
     }
 
-    return (<div className="questionDetail">
-        <h2 className="title">Custom question solver</h2>
+    return (<div className={styles['question-detail']}>
+        <h2 className={styles.title}>Custom question solver</h2>
         <fieldset>
             <p>Write the question you wish to solve</p>
             <textarea
-                className="input questionInput"
+                className={`${styles.input} ${styles['question-input']}`}
                 onChange={handleInputChange}
                 value={question}
+                ref={questionTextareaRef} rows={1}
             />
         </fieldset>
+
+        <div className={styles.answers}>
+            {answers.map((savedAnswer, idx) =>
+                <CustomAnswer
+                    key={idx}
+                    id={idx}
+                    text={savedAnswer}
+                    deleteAnswer={deleteAnswer}
+                />
+            )}
+        </div>
+
         <fieldset>
             <p>Answers</p>
-            <div className="new-answer">
+            <div className={styles['new-answer']}>
                 <textarea
-                    className="input answerInput"
+                    className={styles.input}
                     placeholder="Write the answer option here"
-                    ref={textareaRef} rows={1}
+                    onChange={setNewAnswer}
+                    value={newAnswer}
+                    ref={answerTextareaRef} rows={1}
                 />
-                <button>+</button>
+                <button
+                    className={`${styles['add-question']} ${answers.length === 5 ? styles.disabled : ''}`}
+                    onClick={addAnswer}    
+                >+</button>
             </div>
         </fieldset>
-        <div className="buttons">
+        <div className={styles.buttons}>
             <button onClick={solveQuestion}>Solve</button>
             { answer !== '' && <button onClick={getNewAnswer}>New answer</button> }
             <button onClick={clearAnswer}>Clear</button>
             <button onClick={handleSaveQuestion}>Save</button>
         </div>
     
-        <div className="answer-wrapper">
+        <div className={styles['answer-wrapper']}>
             { loading && <Spinner /> }
-            { answer && <p className="subtitle">AI answer</p> }
+            { answer && <p className={styles.subtitle}>AI answer</p> }
             <p>{answer}</p>
         </div>
     </div>);
