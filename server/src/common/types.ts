@@ -3,7 +3,7 @@ export interface Question {
     question: string,
     answers: string[],
     type: string,
-    correct: string,
+    correct: number,
     explanation: string,
     difficulty: string,
 }

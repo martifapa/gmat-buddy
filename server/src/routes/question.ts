@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { provideDifferentExplanation, solveQuestion } from '../controllers/question';
+import { AIAnswerToObject } from '../common/utils';
 
 
 const router = express.Router();
@@ -14,7 +15,9 @@ router.post('/question', async (request, response) => {
 
     try {
         const answer = await solveQuestion(question);
-        response.json({ answer }).end();
+        const answerObject = AIAnswerToObject(answer);
+        
+        response.json(answerObject).end();
     } catch (error) {
         console.log(error);
         response.status(500).json({ error: 'Failed to solve question' }).end();

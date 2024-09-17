@@ -2,8 +2,9 @@ import groq from "../groq";
 import { data } from "./data";
 import { Question, ReadingQuestion } from "./types";
 
+
 // AI - PROMPTS
-export const promptGroq = async (prompt: string): Promise<string> => {
+export const promptGroq = async (prompt: string, temperature:number=0.5): Promise<string> => {
     const chatCompletion = await groq.chat.completions.create({
         "messages": [
           {
@@ -11,10 +12,10 @@ export const promptGroq = async (prompt: string): Promise<string> => {
             "content": prompt
           }
         ],
-        "model": "llama3-groq-70b-8192-tool-use-preview",
-        "temperature": 0.5,
+        "model": "llama3-8b-8192",
+        "temperature": temperature,
         "max_tokens": 1024,
-        "top_p": 0.65,
+        "top_p": 1,
         "stream": true,
         "stop": null
     });
@@ -33,14 +34,14 @@ export const buildPrompt = (base: string, examples: Question[] | ReadingQuestion
     parsedExamples += 'Text: ' + examples[0].text + '\n';
     parsedExamples += (examples[0] as ReadingQuestion).questions.map(q =>
       `Reference question: ${q.question}
-      Reference answer: ${q.correct}
+      Reference answer index: ${q.correct}
       Reference explanation: ${q.explanation}
       ---
       Question to solve: ${question}`).join('\n\n');
   } else {
     parsedExamples += (examples as Question[]).map(example =>
       `Reference question: ${example.question}
-      Reference answer: ${example.correct}
+      Reference answer index: ${example.correct}
       Reference explanation: ${example.explanation}
       ---
       Question to solve: ${question}`).join('\n\n');
@@ -60,11 +61,22 @@ const isReadingQuestion = (item: Question | ReadingQuestion): item is ReadingQue
 }
 
 export const getTrainingData = (type: string): Question[] | ReadingQuestion[] => {
-  const trainingData = data.filter(question => question.type === type);
+  const trainingData = data.filter(question => 
+    question.type.toLowerCase().includes(type.toLowerCase()));
   // Type guard to ensure correct return type
   if (trainingData.length > 0 && isReadingQuestion(trainingData[0])) {
     return trainingData as ReadingQuestion[];
   } else {
     return trainingData as Question[]
   }
+}
+
+export const AIAnswerToObject = (text: string) => {
+  const json = JSON.parse(text);
+
+  if (json) {
+    return json;
+  }
+
+  return null; // Handle cases where the format doesn't match
 }

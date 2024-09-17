@@ -3,14 +3,16 @@ import { buildPrompt, getTrainingData, promptGroq } from "../common/utils";
 
 
 const getQuestionType = async (question: string): Promise<string> => {
-    const prompt = `${getQuestionTypePrompt} ${question}`;
-    return await promptGroq(prompt);
+    const prompt = `${getQuestionTypePrompt}
+    Provided question: "${question}"`;
+    return await promptGroq(prompt, 0);
 }
 
 const solveQuestion = async (question: string): Promise<string> => {
     const questionType = await getQuestionType(question);
     const trainingData = getTrainingData(questionType); // Get fine-tune data
     const prompt = buildPrompt(solveQuestionPrompt, trainingData, question); //Build prompt
+
     return await promptGroq(prompt);
 };
 
