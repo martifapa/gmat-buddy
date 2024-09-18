@@ -32,3 +32,5 @@ export const askDifferentExplanation = `
 
 
     Use the following examples for reference:`
+
+export const TYPE_READING = 'Verbal Reasoning - Reading Comprehension';
