@@ -7,7 +7,7 @@ import { AIAnswerToObject } from '../common/utils';
 const router = express.Router();
 
 
-router.post('/question', async (request, response) => {
+router.post('/question/solve', async (request, response) => {
     const { question } = request.body;
     if (!question) {
         return response.status(400).json({ error: 'Question is required' }).end();
@@ -24,7 +24,7 @@ router.post('/question', async (request, response) => {
     }
 });
 
-router.post('/question/new', async (request, response) => {
+router.post('/question/solve/new', async (request, response) => {
     const { question, previousAnswer } = request.body;
     if (!question || !previousAnswer) {
         return response.status(400).json({ error: 'Question and previous answer are required' }).end();
