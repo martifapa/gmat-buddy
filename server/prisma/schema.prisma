@@ -46,7 +46,6 @@ model Question {
 
 model ReadingQuestion {
   id          Int         @id @default(autoincrement())
-  type        String
   text        String
   questions   Question[]  @relation(name: "ReadingQuestions")
 }

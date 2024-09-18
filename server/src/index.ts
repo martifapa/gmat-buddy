@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 
-app.use(questionRouter);
+app.use('/question', questionRouter);
 app.use('/train', trainRouter);
 
 
