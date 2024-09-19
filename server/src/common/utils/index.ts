@@ -1,6 +1,6 @@
 export {
     getTrainingData,
-    getAllQuestions,
+    getQuestions,
     createQuestion,
     createQuestionsBulk } from './ddbb';
 
@@ -10,4 +10,5 @@ export {
 
 
 export {
-    AIAnswerToObject } from './utils';
+    AIAnswerToObject,
+    parseFullQuestionType } from './utils';

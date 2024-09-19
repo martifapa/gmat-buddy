@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { provideDifferentExplanation, solveQuestion } from '../controllers/question';
-import { AIAnswerToObject, getAllQuestions, createQuestion, createQuestionsBulk } from '../common/utils';
+import { provideDifferentExplanation, solveQuestion, getAllQuestions } from '../controllers/question';
+import { AIAnswerToObject, createQuestion, createQuestionsBulk } from '../common/utils';
 import { QUESTION_REQUEST_BASE_FIELDS } from '../common/constants';
 
 
@@ -76,7 +76,7 @@ router.get('/all', async (_request, response) => {
         const questions = await getAllQuestions();
         return response.json(questions).end();
     } catch (error) {
-        console.error(error);
+        console.log(error);
         return response.status(500).json({ error: 'Internal server error' });
     }
 });

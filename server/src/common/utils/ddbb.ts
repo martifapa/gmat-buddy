@@ -1,11 +1,13 @@
-import { text } from "stream/consumers";
 import { QUESTION_REQUEST_BASE_FIELDS, TYPE_READING } from "../constants";
 import prisma from "../prisma";
-import { ReadingQuestion, RequestFullQuestion, RequestReadingQuestion, TrainQuestion, TrainReadingQuestion } from "../types";
+import { RequestFullQuestion, ResponseFullQuestion, TrainQuestion, TrainReadingQuestion } from "../types";
+import { parseFullQuestionType } from "./utils";
 
 
 export const getTrainingData = async (type: string): Promise<TrainQuestion[] | TrainReadingQuestion[]> => {
-    if (TYPE_READING.includes(type.toLowerCase())) { // ReadingQuestion type
+    const questionType = parseFullQuestionType(type);
+
+    if (questionType === TYPE_READING) { // ReadingQuestion type
         const trainingData = await prisma.trainReadingQuestion.findMany({
             where: { type: TYPE_READING },
             include: { questions: true },
@@ -14,16 +16,14 @@ export const getTrainingData = async (type: string): Promise<TrainQuestion[] | T
     } else {
         const trainingData = await prisma.trainQuestion.findMany({
             where: {
-                type: {
-                    contains: type,
-                },
+                type: questionType,
             },
         });
         return trainingData;
     }
 };
 
-export const getAllQuestions = async () => {
+export const getQuestions = async () => {
     const questions = await prisma.question.findMany({
         where: {
             readingQuestionId: null, // Exclude reading type questions
@@ -34,7 +34,7 @@ export const getAllQuestions = async () => {
         include: { questions: true }, // Include questions excluded earlier
     });
 
-    return [...questions, ...readingQuestions];
+    return [...questions, ...readingQuestions] as ResponseFullQuestion[];
 };
 
 export const createQuestion = async (question: RequestFullQuestion) => {

@@ -62,7 +62,7 @@ export interface RequestQuestion {
 
 export interface RequestReadingQuestion {
     text: string,
-    questions: Question[],
+    questions: RequestQuestion[],
 }
 
 // Union types

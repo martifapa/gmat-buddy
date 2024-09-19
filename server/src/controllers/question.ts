@@ -1,5 +1,7 @@
 import { askDifferentExplanation, getQuestionTypePrompt, solveQuestionPrompt } from "../common/constants";
+import { ResponseFullQuestion } from "../common/types";
 import { getTrainingData, buildPrompt, promptGroq } from "../common/utils";
+import { getQuestions } from "../common/utils";
 
 
 // SOLVE-related controllers
@@ -28,8 +30,8 @@ const provideDifferentExplanation = async (question: string, previousAnswer: str
 
 
 // GET-related endpoints
-const getAllQuestions = async (): Promise<Response[]> => {
-    const questions = await getAllQuestions();
+const getAllQuestions = async (): Promise<ResponseFullQuestion[]> => {
+    const questions = await getQuestions();
     return questions;
 };
 
