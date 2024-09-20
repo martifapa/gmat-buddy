@@ -16,7 +16,7 @@ const QuestionList = () => {
 
     const filteredQuestions = questions.filter(question => {
         const readingMatch = selectedType ? selectedType.toLowerCase().includes('reading') : true;
-       
+        
         let difficultyMatch = true;
         if ('difficulty' in question) {
             difficultyMatch = selectedDifficulty ? question.difficulty === selectedDifficulty : true;

@@ -1,6 +1,70 @@
 @import '../../../common/globals.css';
 
 
+/* QUESTION TYPE */
+.question-type {
+    position: relative;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    max-width: 360px;
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    box-shadow: 0 0 1px var(--dark-grey);
+    transition: height .5;
+}
+
+.selected-type {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.arrow {
+    height: 25px;
+    width: 25px;
+    transition: transform .2s;
+}
+
+.arrow.selected {
+    transform: rotate(-90deg);
+}
+
+.dropdown-content {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 2px);
+    left: 0;
+    max-width: 360px;
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0 0 3px var(--dark-grey);
+    border-radius: 4px;
+    padding: 6px;
+    display: none;
+
+    &.expanded {
+        display: block;
+    }
+}
+
+.dropdown-content p {
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.dropdown-content p:hover {
+    background-color: var(--light-blue);
+}
+
+.dropdown-content p.selected {
+    border: 1px solid var(--deep-blue);
+}
+
 /* QUESTION DETAIL */
 .question-detail {
     margin-inline: auto;
@@ -196,6 +260,5 @@
 
 .disabled {
     pointer-events: none;
-    border: 1px solid transparent !important;
     background-color: var(--light-grey) !important; /* Ensure it applies*/
 }

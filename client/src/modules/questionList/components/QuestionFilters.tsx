@@ -14,8 +14,11 @@ interface Props {
 export default function QuestionFilters({
     activeType, activeDifficulty, setSelectedType, setSelectedDifficulty
   }: Props) {
-  const questionTypes = Array.from(new Set(useAppSelector(state => state.questions.questionBank).map(q => q.type)));
-  const questionLevels = Array.from(new Set(useAppSelector(state => state.questions.questionBank).map(q => q.difficulty)));
+    const questionLevels = Array.from(new Set(useAppSelector(state => state.questions.questionBank).map(q => {
+      if ('difficulty' in q) return q.difficulty;
+    })));
+    const questionTypes = ['Reading Comprehension', 'Rest'];
+  // const questionTypes = Array.from(new Set(useAppSelector(state => state.questions.questionBank).map(q => q.type)));
   
   const [typeToggleState, { toggle: toggleType, off: offType }] = useToggle();
   const [difficultyToggleState, { toggle: toggleDifficulty, off: offDifficulty }] = useToggle();
@@ -43,9 +46,9 @@ export default function QuestionFilters({
     setSelectedType(type);
   };
 
-  const handleFilterDifficultyOptionClick = (difficulty: string) => {
+  const handleFilterDifficultyOptionClick = (difficulty: string | undefined) => {
     toggleDifficulty();
-    setSelectedDifficulty(difficulty);
+    setSelectedDifficulty(difficulty === undefined ? null : difficulty);
   };
 
   return (

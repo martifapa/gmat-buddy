@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { showToastMessage } from "../../../common/utils";
 import { useAppDispatch } from "../../../common/hooks/redux";
 import { useCustomAnswers, useAutoResizeTextArea, useCustomQuestion } from "../hooks";
@@ -7,10 +7,14 @@ import { Spinner } from "../../../components/spinner/spinner";
 import CustomAnswer from "./CustomAnswer";
 
 import styles from "../styles/CustomQuestion.module.css";
+import useToggle from "../../navBar/hooks/useToggle";
+import { QUESTION_TYPES } from "../../../common/constants";
 
 
 const CustomQuestion = () => {
     const dispatch = useAppDispatch();
+
+    const [toggleState, { toggle }] = useToggle();
 
     const {
         solveQuestion,
@@ -34,18 +38,42 @@ const CustomQuestion = () => {
     const questionTextareaRef = useAutoResizeTextArea();
     const answerTextareaRef = useAutoResizeTextArea();
 
+    const [type, setType] = useState<string | null>(null);
+
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setQuestion(event.target.value);
     }
 
     const handleSaveQuestion = () => {
-        dispatch(addQuestion({ question, answers }));
+        dispatch(addQuestion({ question, answers, type }));
         showToastMessage('Question saved correctly')
     }
 
     return (
     <div className={styles['question-detail']}>
         <h2 className={styles.title}>Custom question solver</h2>
+        <div className={styles['question-type']}>
+            <div
+                className={styles['dropdown']}
+                onClick={toggle}
+            >
+                <div className={styles['selected-type']}>
+                    <p>{type || 'Question type'}</p>
+                    <img className={`${styles.arrow} ${toggleState ? styles.selected : ''}`} src="/chevronLeft.svg" alt="Arrow icon" />
+                </div>
+                { toggleState && 
+                    <div className={`${styles['dropdown-content']} ${styles.expanded}`}>
+                        {QUESTION_TYPES.map(type =>
+                            <p
+                                key={type}
+                                onClick={() => setType(type)}
+                            >
+                                {type}</p>
+                        )}
+                    </div>
+                }
+            </div>
+        </div>
         <fieldset>
             <p>Write the question you want to solve or save</p>
             <textarea
@@ -85,12 +113,18 @@ const CustomQuestion = () => {
             </div>
         </fieldset>
         <div className={styles.buttons}>
-            <button onClick={ () => solveQuestion(answers) }>Solve</button>
+            <button
+                onClick={ () => solveQuestion(answers) }
+                className={question ? '' : styles.disabled}
+            >Solve</button>
             { explanation !== '' && <button onClick={getNewAnswer}>New answer</button> }
-            <button onClick={clearAnswer}>Clear</button>
+            <button
+                onClick={clearAnswer}
+                className={question ? '' : styles.disabled}    
+            >Clear</button>
             <button
                 onClick={handleSaveQuestion}
-                className={answers.length === 5 && question ? '' : styles.disabled}
+                className={answers.length === 5 && question && type ? '' : styles.disabled}
             >Save</button>
         </div>
 
