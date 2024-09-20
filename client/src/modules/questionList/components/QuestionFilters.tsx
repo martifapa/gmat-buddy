@@ -84,12 +84,15 @@ export default function QuestionFilters({
         </p>
         { difficultyToggleState &&
           <div className={styles.dropdown}>
-            {questionLevels.map(qLevel =>
-              <p
-                key={qLevel}
-                className={activeDifficulty === qLevel ? styles.selected: ''}
-                onClick={ () => handleFilterDifficultyOptionClick(qLevel) }>{qLevel}
-            </p>
+            {questionLevels.map(qLevel => {
+              if (!qLevel) return null;
+              return (
+                <p
+                  key={qLevel}
+                  className={activeDifficulty === qLevel ? styles.selected: ''}
+                  onClick={ () => handleFilterDifficultyOptionClick(qLevel) }>{qLevel}
+              </p>)
+            }
             )}
           </div>
         }
