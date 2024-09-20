@@ -10,7 +10,7 @@ interface Props {
         id: number,
         question: string,
         answers: string[],
-        difficulty: string,
+        difficulty?: string,
         readingQuestionId: number,
     }[],
 }

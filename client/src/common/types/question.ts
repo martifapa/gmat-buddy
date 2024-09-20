@@ -5,10 +5,14 @@ export interface Question {
     difficulty?: string,
 }
 
+export interface QuestionWithReadingId extends Question {
+    readingQuestionId: number,
+}
+
 export interface ReadingQuestion {
     id: number,
     text: string,
-    questions: Question[],
+    questions: QuestionWithReadingId[],
 }
 
 export type FullQuestion = Question | ReadingQuestion;

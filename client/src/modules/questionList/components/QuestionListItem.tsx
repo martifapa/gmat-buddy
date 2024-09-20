@@ -6,17 +6,16 @@ import styles from '../styles/QuestionList.module.css';
 interface Props {
     id: number,
     question: string,
-    type: string,
-    difficulty: string,
+    difficulty?: string,
 }
 
-export default function QuestionListItem({ id, question, type, difficulty }: Props) {
+export default function QuestionListItem({ id, question, difficulty }: Props) {
     const textLength = 200;
   return (
     <Link to={`question/${id}`} className={styles['question-item']}>
         <div className={styles['question-header']}>
-            <p>{difficulty}</p>
-            <p>{type}</p>
+            <p>{difficulty || null}</p>
+            {/* <p>{type}</p> */}
         </div>
         <p className={styles['question-text']}>{
             question.length > textLength

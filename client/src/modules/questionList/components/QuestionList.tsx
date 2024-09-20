@@ -15,9 +15,14 @@ const QuestionList = () => {
     const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
 
     const filteredQuestions = questions.filter(question => {
-        const typeMatch = selectedType ? question.type === selectedType : true;
-        const difficultyMatch = selectedDifficulty ? question.difficulty === selectedDifficulty : true;
-        return typeMatch && difficultyMatch;
+        const readingMatch = selectedType ? selectedType.toLowerCase().includes('reading') : true;
+       
+        let difficultyMatch = true;
+        if ('difficulty' in question) {
+            difficultyMatch = selectedDifficulty ? question.difficulty === selectedDifficulty : true;
+        }
+
+        return readingMatch && difficultyMatch;
     });
 
     return (
@@ -42,7 +47,6 @@ const QuestionList = () => {
                     key={question.id}
                     id={question.id}
                     question={question.question}
-                    type={question.type}
                     difficulty={question.difficulty}
                 />;
             })}
