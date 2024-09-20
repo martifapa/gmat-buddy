@@ -1,0 +1,14 @@
+@import '../../../common/globals.css';
+
+
+.inner-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.loading {
+        background-color: var(--base-blue);
+        color: transparent;
+        pointer-events: none;
+    }
+}

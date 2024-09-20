@@ -21,20 +21,16 @@ export default function useQuestionDetail(id: number) {
   const handleSolveQuestion = async () => {
     if (!question?.question) return;
 
-    setLoading(true);
     const { answerIdx, explanation } = await solveQuestion(parseFullQuestion());
     setAnswer(answerIdx);
     setExplanation(explanation);
-    setLoading(false);
   } 
 
   const handleNewExplanation = async () => {
     if (!question?.question) return;
     
-    setLoading(true);
     const { explanation: newExplanation } = await getNewAnswer(parseFullQuestion(), explanation);
     setExplanation(newExplanation);
-    setLoading(false);
   }
 
   const navigateToQuestion = (idx: number) => {

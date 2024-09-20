@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { showToastMessage } from "../../../common/utils";
 import { useAppDispatch } from "../../../common/hooks/redux";
 import { useCustomAnswers, useAutoResizeTextArea, useCustomQuestion } from "../hooks";
-import { addQuestion } from "../../../redux/slices/question";
-import { Spinner } from "../../../components/spinner/spinner";
+import { saveQuestion } from "../../../redux/slices/question";
 import CustomAnswer from "./CustomAnswer";
 import useToggle from "../../navBar/hooks/useToggle";
 import { QUESTION_TYPES } from "../../../common/constants";
+import ButtonWithLoadingSpinner from "../../../components/ButtonWithLoadingSpinner/components/ButtonWithLoadingSpinner";
 
 import styles from "../styles/CustomQuestion.module.css";
 
@@ -24,7 +24,6 @@ const CustomQuestion = () => {
         explanation,
         question,
         setQuestion,
-        loading,
     } = useCustomQuestion();
 
     const {
@@ -38,16 +37,17 @@ const CustomQuestion = () => {
     const questionTextareaRef = useAutoResizeTextArea();
     const answerTextareaRef = useAutoResizeTextArea();
 
-    const [type, setType] = useState<string | null>(null);
+    const [type, setType] = useState<string>(''); // Handle question type
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setQuestion(event.target.value);
-    }
+    };
 
     const handleSaveQuestion = () => {
-        dispatch(addQuestion({ question, answers, type }));
-        showToastMessage('Question saved correctly')
-    }
+        const readingQuestionId = null; // To remove when saving reading-questions is supported
+        dispatch(saveQuestion({ question, type, answers, readingQuestionId }));
+        showToastMessage('Question saved correctly');
+    };
 
     return (
     <div className={styles['question-detail']}>
@@ -74,6 +74,7 @@ const CustomQuestion = () => {
                 }
             </div>
         </div>
+
         <fieldset>
             <p>Write the question you want to solve or save</p>
             <textarea
@@ -112,23 +113,36 @@ const CustomQuestion = () => {
                 >+</button>
             </div>
         </fieldset>
+
         <div className={styles.buttons}>
-            <button
-                onClick={ () => solveQuestion(answers) }
-                className={question ? '' : styles.disabled}
-            >Solve</button>
-            { explanation !== '' && <button onClick={getNewAnswer}>New answer</button> }
+
             <button
                 onClick={clearAnswer}
                 className={question ? '' : styles.disabled}    
             >Clear</button>
-            <button
-                onClick={handleSaveQuestion}
-                className={answers.length === 5 && question && type ? '' : styles.disabled}
-            >Save</button>
+
+            <ButtonWithLoadingSpinner
+                onClick={async () => handleSaveQuestion() }
+                className={question && answers.length === 5 && type ? '' : styles.disabled}
+                label="Save"
+            />
+
+            <ButtonWithLoadingSpinner
+                onClick={async () => solveQuestion(answers)}
+                className={question && answers.length === 5 ? '' : styles.disabled}
+                label="Solve"
+            />
+
+            {
+                explanation !== '' &&
+                <ButtonWithLoadingSpinner
+                    onClick={async () => getNewAnswer()}
+                    className={question ? '' : styles.disabled}
+                    label="New answer"
+                />
+            }
         </div>
 
-        { loading && <Spinner /> }
         { explanation && <p className={styles.subtitle}>Explanation</p> }
         <p>{explanation}</p>
     </div>

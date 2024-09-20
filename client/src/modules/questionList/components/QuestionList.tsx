@@ -2,9 +2,10 @@ import { useAppSelector } from "../../../common/hooks/redux";
 import QuestionFilters from "./QuestionFilters";
 import { useState } from "react";
 import QuestionListItem from "./QuestionListItem";
+import ReadingQuestionListItem from "./ReadingQuestionListItem";
+import { READING_TYPE } from "../../../common/constants";
 
 import styles from '../styles/QuestionList.module.css';
-import ReadingQuestionListItem from "./ReadingQuestionListItem";
 
 
 const QuestionList = () => {
@@ -15,14 +16,19 @@ const QuestionList = () => {
     const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
 
     const filteredQuestions = questions.filter(question => {
-        const readingMatch = selectedType ? selectedType.toLowerCase().includes('reading') : true;
+        let typeMatch = true;
+        if ('type' in question) {
+            typeMatch = selectedType ? question.type === selectedType : true;
+        } else { // If question has no type is of ReadingQuestion type
+            typeMatch = selectedType ? READING_TYPE === selectedType : true;
+        }
         
         let difficultyMatch = true;
         if ('difficulty' in question) {
             difficultyMatch = selectedDifficulty ? question.difficulty === selectedDifficulty : true;
         }
 
-        return readingMatch && difficultyMatch;
+        return typeMatch && difficultyMatch;
     });
 
     return (
@@ -47,6 +53,7 @@ const QuestionList = () => {
                     key={question.id}
                     id={question.id}
                     question={question.question}
+                    type={question.type}
                     difficulty={question.difficulty}
                 />;
             })}

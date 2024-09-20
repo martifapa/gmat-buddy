@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { QuestionState } from "../../common/types/question";
+import { FullQuestionRequest, QuestionState } from "../../common/types/question";
 import { IDLE, LOADING } from "../../common/constants";
-import { getAllQuestions } from "../../services/question";
+import { createQuestion, getAllQuestions } from "../../services/question";
 
 
 const initialState: QuestionState = {
@@ -18,25 +18,19 @@ export const fetchQuestions = createAsyncThunk(
     }
 );
 
+export const saveQuestion = createAsyncThunk(
+    'questions/saveQuestion',
+    async (questionRequest: FullQuestionRequest) => {
+        const response = await createQuestion(questionRequest);
+        return response;
+    }
+);
+
+
 const slice = createSlice({
     name: 'questions',
     initialState,
-    reducers: {
-        addQuestion(state, action) {
-            const { question, answers, type, correct, explanation, difficulty } = action.payload;
-            const id = Math.max(...state.questionBank.map(q => q.id)) + 1;
-            const newQuestion = { // With default empties
-                id,
-                question,
-                answers: answers || [],
-                type: type || "",
-                correct: correct || "",
-                explanation: explanation || "",
-                difficulty: difficulty || ""
-            }
-            state.questionBank = [...state.questionBank, newQuestion];
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchQuestions.pending, (state) => {
@@ -46,10 +40,18 @@ const slice = createSlice({
                 state.status = IDLE;
                 state.questionBank = action.payload;
             })
+            // SAVE question
+            .addCase(saveQuestion.pending, (state) => {
+                state.status = LOADING;
+            })
+            .addCase(saveQuestion.fulfilled, (state, action) => {
+                state.status = IDLE;
+                state.questionBank = [...state.questionBank, action.payload];
+            })
     }
 });
 
 
-export const { addQuestion } = slice.actions;
+// export const {  } = slice.actions;
 
 export default slice.reducer;

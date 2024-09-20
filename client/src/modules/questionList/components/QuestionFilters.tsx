@@ -1,3 +1,4 @@
+import { READING_TYPE } from '../../../common/constants';
 import { useAppSelector } from '../../../common/hooks/redux';
 import useToggle from '../../navBar/hooks/useToggle';
 
@@ -17,9 +18,10 @@ export default function QuestionFilters({
     const questionLevels = Array.from(new Set(useAppSelector(state => state.questions.questionBank).map(q => {
       if ('difficulty' in q) return q.difficulty;
     })));
-    const questionTypes = ['Reading Comprehension', 'Rest'];
-  // const questionTypes = Array.from(new Set(useAppSelector(state => state.questions.questionBank).map(q => q.type)));
-  
+    const questionTypes = Array.from(new Set(useAppSelector(state => state.questions.questionBank).map(q => {
+      if ('text' in q) return READING_TYPE; // Root readingQuestion doesn't have type property
+      return q.type})));
+
   const [typeToggleState, { toggle: toggleType, off: offType }] = useToggle();
   const [difficultyToggleState, { toggle: toggleDifficulty, off: offDifficulty }] = useToggle();
 
@@ -84,9 +86,9 @@ export default function QuestionFilters({
           <div className={styles.dropdown}>
             {questionLevels.map(qLevel =>
               <p
-              key={qLevel}
-              className={activeDifficulty === qLevel ? styles.selected: ''}
-              onClick={ () => handleFilterDifficultyOptionClick(qLevel) }>{qLevel}
+                key={qLevel}
+                className={activeDifficulty === qLevel ? styles.selected: ''}
+                onClick={ () => handleFilterDifficultyOptionClick(qLevel) }>{qLevel}
             </p>
             )}
           </div>

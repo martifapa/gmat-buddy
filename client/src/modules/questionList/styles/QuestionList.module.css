@@ -62,6 +62,7 @@ h2 {
 
 .dropdown {
     position: absolute;
+    z-index: 10;
     top: 110%;
     right: -10px;
     width: max-content;

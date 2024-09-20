@@ -116,7 +116,7 @@
 }
 
 .answer-input:focus {
-    outline: 1px solid var(--dark-grey);
+    outline: 1px solid var(--dark);
 }
 
 .add-question {

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useQuestionDetail from "../hooks/useQuestionDetail";
-import { Spinner } from "../../../components/spinner/spinner";
 import { setClassNames } from "../../../common/utils";
+import ButtonWithLoadingSpinner from "../../../components/ButtonWithLoadingSpinner/components/ButtonWithLoadingSpinner";
 
 import styles from '../styles/QuestionList.module.css';
 
@@ -17,7 +17,6 @@ const QuestionDetail = () => {
         explanation,
         answer,
         question,
-        loading
     } = useQuestionDetail(questionId);
 
     const [selected, setSelected] = useState(-1);
@@ -54,10 +53,22 @@ const QuestionDetail = () => {
             </div>
         </div>
         <div className={styles.buttons}>
-            <button onClick={ solveQuestion }>Solve</button>
-            { explanation !== '' && <button onClick={ getNewAnswer }>New explanation</button> }
+            <ButtonWithLoadingSpinner
+                onClick={async () => solveQuestion()}
+                className={question ? '' : styles.disabled}
+                label="Solve"
+            />
+            
+            {
+                explanation !== '' &&
+                <ButtonWithLoadingSpinner
+                onClick={async () => getNewAnswer()}
+                className={question ? '' : styles.disabled}
+                label="New answer"
+            />
+            }
         </div>
-        { loading && <Spinner /> }
+        
         { explanation && <h3 className={styles.subtitle}>Explanation</h3>}
         <p className={styles["ai-answer"]}>{explanation}</p>
     </div>);
