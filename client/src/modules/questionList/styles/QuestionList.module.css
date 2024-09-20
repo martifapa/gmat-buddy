@@ -106,11 +106,11 @@ h2 {
     padding: 12px 24px;
     border-radius: 4px;
     border: 1px solid var(--light-blue);
-    transition: transform .2 ease-in;
+    transition: box-shadow .2 ease-in;
 }
 
 .question-item:hover {
-    transform: scale(1.01);
+    box-shadow: 0 0 4px var(--light-blue);
 }
 
 .question-header {
