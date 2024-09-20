@@ -47,6 +47,7 @@ export const createQuestion = async (question: RequestFullQuestion) => {
                         question: q.question,
                         answers: q.answers,
                         difficulty: q.difficulty,
+                        type: q.type,
                     })),
                 },
             },

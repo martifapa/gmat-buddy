@@ -55,7 +55,7 @@ router.post('/save/one', async (request, response) => {
         const newQuestion = await createQuestion(question);
         return response.json(newQuestion).end();
     } else {
-        return response.status(400).json({ error: '"question" and "answers" fields are mandaory' }).end();
+        return response.status(400).json({ error: '"question", "answers", and "type" fields are mandaory' }).end();
     }
 });
 

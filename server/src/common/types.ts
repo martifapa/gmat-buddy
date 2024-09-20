@@ -38,10 +38,12 @@ export type RequestFullTrainQuestion = RequestTrainQuestion | RequestTrainReadin
 
 export type ResponseFullTrainQuestion = TrainQuestion | TrainReadingQuestion;
 
+
 // 'APP' DATA TYPES
 export interface Question {
     id: number,
     question: string,
+    type: string,
     answers: string[],
     difficulty?: string,
     readingQuestionId?: number,
@@ -56,6 +58,7 @@ export interface ReadingQuestion {
 
 export interface RequestQuestion {
     question: string,
+    type: string,
     answers: string[],
     difficulty?: string,
 }

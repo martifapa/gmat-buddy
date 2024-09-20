@@ -19,11 +19,11 @@ import prisma from '../../common/prisma';
 describe('GET /questions/all', () => {
     it('should return a list of questions and reading-questions', async () => {
         (prisma.question.findMany as jest.Mock).mockResolvedValue([
-            { id: 1, question: 'question text', answers: ['answer 1'] }
+            { id: 1, question: 'question text', answers: ['answer 1'], type: 'test' }
         ]);
         (prisma.readingQuestion.findMany as jest.Mock).mockResolvedValue([
             { id: 2, text: 'reading-question text', questions: [
-                { id: 1, question: 'question text', answers: ['answer 1'] }
+                { id: 1, question: 'question text', answers: ['answer 1'], type: 'test' }
             ]}
         ]);
 

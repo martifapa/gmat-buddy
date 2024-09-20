@@ -38,6 +38,7 @@ model TrainReadingQuestion {
 model Question {
   id                Int                @id @default(autoincrement())
   question          String
+  type              String            @default("Unknown")
   answers           String[]
   difficulty        String?
   readingQuestionId Int?              // Optional field to link to ReadingQuestion

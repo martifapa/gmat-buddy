@@ -86,8 +86,8 @@ describe('getQuestions', () => {
     });
 
     it('should fetch question and reading-questions', async () => {
-        (prisma.question.findMany as jest.Mock).mockResolvedValue([{ id: 1, question: 'question text', answers: ['answer 1'] }]);
-        (prisma.readingQuestion.findMany as jest.Mock).mockResolvedValue([{ id: 2, text: 'reading-question text', questions: [{ id: 1, question: 'question text', answers: ['answer 1'] }] }]);
+        (prisma.question.findMany as jest.Mock).mockResolvedValue([{ id: 1, question: 'question text', answers: ['answer 1'], type: 'test' }]);
+        (prisma.readingQuestion.findMany as jest.Mock).mockResolvedValue([{ id: 2, text: 'reading-question text', questions: [{ id: 1, question: 'question text', answers: ['answer 1'], type: 'test' }] }]);
 
         const result = await getQuestions();
 
@@ -117,7 +117,8 @@ describe('createQuestion', () => {
                 { 
                     id: 2,
                     question: 'question prompt',
-                    answers: ['answer 1']
+                    answers: ['answer 1'],
+                    type: 'test',
                 },
             ],
             difficulty: 'medium',
@@ -132,6 +133,7 @@ describe('createQuestion', () => {
                     question: 'question prompt',
                     answers: ['answer 1'],
                     difficulty: 'medium',
+                    type: 'test',
                 },
             ],
         };
@@ -146,6 +148,7 @@ describe('createQuestion', () => {
                         question: q.question,
                         answers: q.answers,
                         difficulty: q.difficulty,
+                        type: q.type,
                     })),
                 },
             },
@@ -160,6 +163,7 @@ describe('createQuestion', () => {
             question: 'question prompt',
             answers: ['answer 1'],
             difficulty: 'medium',
+            type: 'test',
         };
 
         (prisma.question.create as jest.Mock).mockResolvedValue(mockQuestion);
@@ -168,6 +172,7 @@ describe('createQuestion', () => {
             question: 'question prompt',
             answers: ['answer 1'],
             difficulty: 'medium',
+            type: 'test',
         };
 
         const result = await createQuestion(inputQuestion);
