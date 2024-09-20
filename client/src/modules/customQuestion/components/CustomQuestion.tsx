@@ -1,14 +1,14 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import { showToastMessage } from "../../../common/utils";
 import { useAppDispatch } from "../../../common/hooks/redux";
 import { useCustomAnswers, useAutoResizeTextArea, useCustomQuestion } from "../hooks";
 import { addQuestion } from "../../../redux/slices/question";
 import { Spinner } from "../../../components/spinner/spinner";
 import CustomAnswer from "./CustomAnswer";
-
-import styles from "../styles/CustomQuestion.module.css";
 import useToggle from "../../navBar/hooks/useToggle";
 import { QUESTION_TYPES } from "../../../common/constants";
+
+import styles from "../styles/CustomQuestion.module.css";
 
 
 const CustomQuestion = () => {
