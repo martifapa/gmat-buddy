@@ -1,15 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SyntheticEvent } from 'react';
 import styles from '../styles/Login.module.css';
 import Input from '../../../components/input/Input';
+import { useAppDispatch } from '../../../common/hooks/redux';
+import { fetchQuestions } from '../../../redux/slices/question';
 
 
 export default function Login() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-    const handleSubmit = (event: SyntheticEvent) => {
-        event.preventDefault();
-        console.log('submit');
-    }
+  const handleSubmit = (event: SyntheticEvent) => {
+    event.preventDefault();
+    console.log('submit');
+    // if login successful --> trigger fetchQuestions
+    dispatch(fetchQuestions());
+    navigate('/');
+  };
 
   return (
     <div className={styles['form-container']}>

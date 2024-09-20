@@ -4,6 +4,7 @@ import { useState } from "react";
 import QuestionListItem from "./QuestionListItem";
 
 import styles from '../styles/QuestionList.module.css';
+import ReadingQuestionListItem from "./ReadingQuestionListItem";
 
 
 const QuestionList = () => {
@@ -29,7 +30,15 @@ const QuestionList = () => {
         />
         <div className={styles['question-list']}>
             {filteredQuestions.map(question => {
-                return <QuestionListItem 
+                if ('text' in question) {
+                    return <ReadingQuestionListItem
+                        key={`r-${question.id}`}
+                        id={question.id}
+                        text={question.text}
+                        questions={question.questions}
+                    />
+                }
+                return <QuestionListItem
                     key={question.id}
                     id={question.id}
                     question={question.question}
