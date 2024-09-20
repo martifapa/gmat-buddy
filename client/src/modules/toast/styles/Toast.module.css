@@ -3,7 +3,7 @@
 
 /* TOAST */
 .toast {
-    position: absolute;
+    position: fixed;
     top: -5px;
     left: 0;
     width: 100%;
