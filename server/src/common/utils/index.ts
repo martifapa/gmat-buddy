@@ -1,12 +1,13 @@
 export {
     getTrainingData,
     getQuestions,
+    getReadingQuestions,
     createQuestion,
     createQuestionsBulk } from './ddbb';
 
 export {
     buildPrompt,
-    promptGroq} from './groq';
+    promptGroq } from './groq';
 
 
 export {

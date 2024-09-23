@@ -1,7 +1,7 @@
+import { ReadingQuestion } from "@prisma/client";
 import { askDifferentExplanation, getQuestionTypePrompt, solveQuestionPrompt } from "../common/constants";
-import { ResponseFullQuestion } from "../common/types";
-import { getTrainingData, buildPrompt, promptGroq } from "../common/utils";
-import { getQuestions } from "../common/utils";
+import { Question } from "../common/types";
+import { getTrainingData, buildPrompt, promptGroq, getQuestions, getReadingQuestions } from "../common/utils";
 
 
 // SOLVE-related controllers
@@ -30,13 +30,19 @@ const provideDifferentExplanation = async (question: string, previousAnswer: str
 
 
 // GET-related endpoints
-const getAllQuestions = async (): Promise<ResponseFullQuestion[]> => {
+const getAllQuestions = async (): Promise<Question[]> => {
     const questions = await getQuestions();
     return questions;
 };
+
+const getAllReadingQuestions = async (): Promise<ReadingQuestion[]> => {
+    const readingQuestions = await getReadingQuestions();
+    return readingQuestions;
+}
 
 export {
     solveQuestion,
     provideDifferentExplanation,
     getAllQuestions,
+    getAllReadingQuestions,
 };

@@ -70,5 +70,3 @@ export interface RequestReadingQuestion {
 
 // Union types
 export type RequestFullQuestion = RequestQuestion | RequestReadingQuestion;
-
-export type ResponseFullQuestion = Question | ReadingQuestion;

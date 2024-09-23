@@ -1,6 +1,6 @@
 import { QUESTION_REQUEST_BASE_FIELDS, TYPE_READING } from "../constants";
 import prisma from "../prisma";
-import { RequestFullQuestion, ResponseFullQuestion, TrainQuestion, TrainReadingQuestion } from "../types";
+import { Question, ReadingQuestion, RequestFullQuestion, TrainQuestion, TrainReadingQuestion } from "../types";
 import { parseFullQuestionType } from "./utils";
 
 
@@ -24,18 +24,16 @@ export const getTrainingData = async (type: string): Promise<TrainQuestion[] | T
 };
 
 export const getQuestions = async () => {
-    const questions = await prisma.question.findMany({
-        where: {
-            readingQuestionId: null, // Exclude reading type questions
-        },
-    });
-
-    const readingQuestions = await prisma.readingQuestion.findMany({
-        include: { questions: true }, // Include questions excluded earlier
-    });
-
-    return [...questions, ...readingQuestions] as ResponseFullQuestion[];
+    const questions = await prisma.question.findMany({});
+    return questions as Question[];
 };
+
+export const getReadingQuestions = async () => {
+    const readingQuestions = await prisma.readingQuestion.findMany({
+        include: { questions: true }, // Include 'inner'-questions
+    });
+    return readingQuestions as ReadingQuestion[];
+}
 
 export const createQuestion = async (question: RequestFullQuestion) => {
     if ('text' in question) {
