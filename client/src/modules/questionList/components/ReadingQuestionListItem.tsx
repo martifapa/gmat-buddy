@@ -5,28 +5,24 @@ import styles from '../styles/QuestionList.module.css';
 
 interface Props {
     id: number,
-    text: string,
-    questions: {
-        id: number,
-        question: string,
-        answers: string[],
-        difficulty?: string,
-        readingQuestionId: number,
-    }[],
+    question: string,
+    type: string,
+    difficulty?: string,
+    readingQuestionId: number,
 }
 
-export default function ReadingQuestionListItem({ id, text, questions }: Props) {
-    const textLength = 200;
+export default function ReadingQuestionListItem({ id, question, type, difficulty, readingQuestionId }: Props) {
+  const textLength = 200;
   return (
     <Link to={`question/${id}`} className={styles['question-item']}>
         <div className={styles['question-header']}>
-            <p>*</p>
-            <p>Reading</p>
+            <p>{difficulty || null}</p>
+            <p>{type}</p>
         </div>
         <p className={styles['question-text']}>{
-            text.length > textLength
-                ? `${text.substring(0, textLength)}...`
-                : text
+            question.length > textLength
+                ? `${question.substring(0, textLength)}...`
+                : question
             }</p>
     </Link>
   );

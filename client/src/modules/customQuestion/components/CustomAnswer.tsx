@@ -16,7 +16,7 @@ export default function CustomAnswer({ id, text, deleteAnswer, correct }: Props)
             className={styles.delete}
             onClick={() => deleteAnswer(id) }
         >
-            <img src="/public/close.svg" alt="Cross icon" />
+            <img src="/close.svg" alt="Cross icon" />
         </button>
     </div>
   )

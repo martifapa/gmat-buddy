@@ -3,6 +3,7 @@ import { getNewAnswer, solveQuestion } from '../../../services/question';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../common/hooks/redux';
 
+
 export default function useQuestionDetail(id: number) {
   const question = useAppSelector(state => state.questions.questionBank.find(q => q.id === id));
   const [loading, setLoading] = useState(false);

@@ -4,6 +4,7 @@ import styles from '../styles/Login.module.css';
 import Input from '../../../components/input/Input';
 import { useAppDispatch } from '../../../common/hooks/redux';
 import { fetchQuestions } from '../../../redux/slices/question';
+import { fetchReadingQuestions } from '../../../redux/slices/readingQuestion';
 
 
 export default function Login() {
@@ -15,6 +16,7 @@ export default function Login() {
     console.log('submit');
     // if login successful --> trigger fetchQuestions
     dispatch(fetchQuestions());
+    dispatch(fetchReadingQuestions());
     navigate('/');
   };
 

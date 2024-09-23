@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useQuestionDetail from "../hooks/useQuestionDetail";
 import { setClassNames } from "../../../common/utils";
 import ButtonWithLoadingSpinner from "../../../components/ButtonWithLoadingSpinner/components/ButtonWithLoadingSpinner";
+import { useAppSelector } from "../../../common/hooks/redux";
 
 import styles from '../styles/QuestionList.module.css';
 
@@ -18,11 +19,19 @@ const QuestionDetail = () => {
         answer,
         question,
     } = useQuestionDetail(questionId);
-
+    
     const [selected, setSelected] = useState(-1);
+    const [text, setText] = useState(''); // Text linked to Reading Question
+    
+    const rootQuestion = question
+        ? useAppSelector(state => state.readingQuestions.questions.find(q => q.id === question.readingQuestionId))
+        : null;
 
     useEffect(() => {
         setSelected(-1); // Reset selected answer onload new question
+        if (question?.readingQuestionId) {
+            setText(rootQuestion?.text || '');
+        }
     }, [questionId])
 
     const handleSelectAnswer = (id: number) => {
@@ -38,6 +47,9 @@ const QuestionDetail = () => {
 
     return (<div className={styles['question-detail']}>
         <h2 className={styles.title}>Question</h2>
+        { question.readingQuestionId &&
+            <p>{text}</p>
+        }
         <div>
             <p className={styles.question}>{question.question}</p>
             {question.answers.map((option, idx) => 
@@ -62,10 +74,10 @@ const QuestionDetail = () => {
             {
                 explanation !== '' &&
                 <ButtonWithLoadingSpinner
-                onClick={async () => getNewAnswer()}
-                className={question ? '' : styles.disabled}
-                label="New answer"
-            />
+                    onClick={async () => getNewAnswer()}
+                    className={question ? '' : styles.disabled}
+                    label="New answer"
+                />
             }
         </div>
         

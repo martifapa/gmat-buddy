@@ -6,6 +6,7 @@ export default function useCustomQuestion() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState(-1);
   const [explanation, setExplanation] = useState('');
+  const [questionType, setQuestionType] = useState('');
 
   const parseFullQuestion = (question: string, answers: string[]) => {
     const indexedAnswers = answers.map((a, idx) => {
@@ -16,7 +17,7 @@ export default function useCustomQuestion() {
   }
 
   const handleSolveQuestion = async (answers: string[]) => {
-    const { answerIdx, explanation } = await solveQuestion(parseFullQuestion(question, answers));
+    const { answerIdx, explanation } = await solveQuestion(parseFullQuestion(question, answers), questionType);
     setAnswer(answerIdx);
     setExplanation(explanation);
   }
@@ -39,6 +40,8 @@ export default function useCustomQuestion() {
     answer,
     explanation,
     question,
+    questionType,
     setQuestion,
+    setQuestionType,
   }
 };

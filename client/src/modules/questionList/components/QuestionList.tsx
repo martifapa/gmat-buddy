@@ -3,7 +3,6 @@ import QuestionFilters from "./QuestionFilters";
 import { useState } from "react";
 import QuestionListItem from "./QuestionListItem";
 import ReadingQuestionListItem from "./ReadingQuestionListItem";
-import { READING_TYPE } from "../../../common/constants";
 
 import styles from '../styles/QuestionList.module.css';
 
@@ -16,12 +15,7 @@ const QuestionList = () => {
     const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
 
     const filteredQuestions = questions.filter(question => {
-        let typeMatch = true;
-        if ('type' in question) {
-            typeMatch = selectedType ? question.type === selectedType : true;
-        } else { // If question has no type is of ReadingQuestion type
-            typeMatch = selectedType ? READING_TYPE === selectedType : true;
-        }
+        const typeMatch = selectedType ? question.type === selectedType : true;
         
         let difficultyMatch = true;
         if ('difficulty' in question) {
@@ -41,12 +35,14 @@ const QuestionList = () => {
         />
         <div className={styles['question-list']}>
             {filteredQuestions.map(question => {
-                if ('text' in question) {
+                if (question.readingQuestionId) {
                     return <ReadingQuestionListItem
-                        key={`r-${question.id}`}
+                        key={question.id}
                         id={question.id}
-                        text={question.text}
-                        questions={question.questions}
+                        question={question.question}
+                        type={question.type}
+                        difficulty={question.difficulty}
+                        readingQuestionId={question.readingQuestionId}
                     />
                 }
                 return <QuestionListItem

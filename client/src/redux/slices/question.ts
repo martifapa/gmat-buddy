@@ -13,7 +13,6 @@ export const fetchQuestions = createAsyncThunk(
     'questions/fetchQuestions',
     async () => {
         const response = await getAllQuestions();
-        console.log('THUNK', response)
         return response;
     }
 );

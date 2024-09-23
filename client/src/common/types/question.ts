@@ -8,12 +8,14 @@ export interface BaseQuestion {
 }
 
 export interface Question extends BaseQuestion {
-    readingQuestionId: number,
+    readingQuestionId: null,
 }
 
 export interface QuestionWithReadingId extends BaseQuestion {
     readingQuestionId: number,
 }
+
+export type FullQuestion = Question | QuestionWithReadingId;
 
 export interface ReadingQuestion {
     id: number,
@@ -21,11 +23,15 @@ export interface ReadingQuestion {
     questions: QuestionWithReadingId[],
 }
 
-export type FullQuestion = Question | ReadingQuestion;
-
+// REDUX
 export interface QuestionState {
     status: string,
     questionBank: FullQuestion[],
+}
+
+export interface ReadingQuestionState {
+    status: string,
+    questions: ReadingQuestion[],
 }
 
 
