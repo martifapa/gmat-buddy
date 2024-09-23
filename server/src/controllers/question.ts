@@ -11,9 +11,9 @@ const getQuestionType = async (question: string): Promise<string> => {
     return await promptGroq(prompt, 0);
 };
 
-const solveQuestion = async (question: string): Promise<string> => {
-    const questionType = await getQuestionType(question);
-    const trainingData = await getTrainingData(questionType); // Get fine-tune data
+const solveQuestion = async (question: string, questionType: string): Promise<string> => {
+    const qType = questionType || await getQuestionType(question);
+    const trainingData = await getTrainingData(qType); // Get fine-tune data
     const prompt = buildPrompt(solveQuestionPrompt, trainingData, question);
 
     return await promptGroq(prompt);

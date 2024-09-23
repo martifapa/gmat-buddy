@@ -4,10 +4,10 @@ import { AiAnswer, FullQuestion, FullQuestionRequest } from '../common/types/que
 
 
 // SOLVE questions
-const solveQuestion = async (question: string): Promise<AiAnswer> => {
+const solveQuestion = async (question: string, questionType: string): Promise<AiAnswer> => {
     const response = await axios.post(
         `${BASE_URL}/question/solve`,
-        { question }
+        { question, questionType }
     );
     
     return response.data;

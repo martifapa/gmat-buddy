@@ -21,7 +21,7 @@ export default function useQuestionDetail(id: number) {
   const handleSolveQuestion = async () => {
     if (!question?.question) return;
 
-    const { answerIdx, explanation } = await solveQuestion(parseFullQuestion());
+    const { answerIdx, explanation } = await solveQuestion(parseFullQuestion(), question.type);
     setAnswer(answerIdx);
     setExplanation(explanation);
   } 

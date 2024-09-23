@@ -9,14 +9,14 @@ const router = express.Router();
 
 // SOLVE-related endpoints
 router.post('/solve', async (request, response) => {
-    const { question } = request.body;
+    const { question, questionType } = request.body;
 
     if (!question) {
         return response.status(400).json({ error: 'Question is required' }).end();
     }
 
     try {
-        const answer = await solveQuestion(question);
+        const answer = await solveQuestion(question, questionType);
         const answerObject = AIAnswerToObject(answer);
         
         response.json(answerObject).end();
