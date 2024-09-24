@@ -4,18 +4,13 @@ import useToggle from "../hooks/useToggle";
 import DropdownOption from "./DropdownOption";
 
 import style from "../styles/NavBar.module.css";
-import { useAppDispatch, useAppSelector } from "../../../common/hooks/redux";
-import { logout } from "../../../redux/slices/auth";
+import useAuth from "../../../common/hooks/useAuth";
 
 
 const Navbar = () => {
     const [toggleState, { toggle }] = useToggle();
-    const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
-    const dispatch = useAppDispatch();
-    
-    const handleLogout = () => {
-        dispatch(logout());
-    }
+    const { isAuthenticated, logout } = useAuth();
+
 
     return (<div className={style.navbar}>
         <p className={style.logo}><Link to="/"><span>GMAT</span> assistant</Link></p>
@@ -34,14 +29,13 @@ const Navbar = () => {
                                     imgSrc="/logout.svg"
                                     alt="Log out icon"
                                     label="Log out"
-                                    onClick={handleLogout}
+                                    onClick={logout}
                                 />
                                 : <DropdownOption
                                     route="/login"
                                     imgSrc="/login.svg"
                                     alt="Login icon"
                                     label="Login"
-                                    onClick={handleLogout}
                                 /> 
                             }
                             <DropdownOption route="/settings" imgSrc="/settings.svg" alt="Settings icon" label="Settings"/>
