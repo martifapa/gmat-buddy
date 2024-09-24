@@ -1,14 +1,18 @@
 import { setMessage } from "../redux/slices/toast";
 import store from "../redux/store";
-import { ACTIVE, HIDDEN } from "./constants";
+import { ACTIVE, FADE, HIDDEN } from "./constants";
 
 
 // TOAST MESSAGES
-export const showToastMessage = async (message: string) => {
-    store.dispatch(setMessage({ message, status: ACTIVE }));
-    setTimeout(() => {
-        store.dispatch(setMessage({ message: '', status: HIDDEN }));
+export const showToastMessage = async (message: string, mood: string='') => {
+    // Show message with correspondent mood
+    store.dispatch(setMessage({ message, mood, status: ACTIVE }));
+    setTimeout(() => { // Trigger fading after delay, keeping message
+        store.dispatch(setMessage({ message, mood, status: FADE }));
     }, 3000);
+    setTimeout(() => { // Set message & mood to ''
+        store.dispatch(setMessage({ message: '', mood: '', status: HIDDEN }));
+    }, 3500);
 };
 
 // UI

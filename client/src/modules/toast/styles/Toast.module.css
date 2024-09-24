@@ -4,16 +4,14 @@
 /* TOAST */
 .toast {
     position: fixed;
-    top: -5px;
+    top: 60px;
     left: 0;
+    z-index: 999;
     width: 100%;
-    transform: translateY(-100%);
-    transition: transform .15s ease-in;
-}
-
-.toast.active {
-    transform: translateY(30px);
-    transition: transform .15s ease-out;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform .1s ease-in, opacity .1s ease-in-out;
+    pointer-events: none;
 }
 
 .toast p {
@@ -25,5 +23,31 @@
     border-radius: 8px;
     text-align: center;
     background-color: var(--white);
+    color: var(--dark);
+}
+
+/* Transitions */
+.toast.active {
+    opacity: 1;
+    transform: translateY(-30px);
+}
+
+.toast.fade {
+    opacity: 0;
+    transform: translateY(-80px);
+}
+
+/* States mood */
+.toast.error p {
+    border: 1px solid var(--red_incorrect);
+    box-shadow: 0 0 7px var(--red_incorrect);
+    text-shadow: 0 0 1px var(--red_incorrect);
+    color: var(--dark);
+}
+
+.toast.success p {
+    border: 1px solid var(--green_correct);
+    box-shadow: 0 0 7px var(--green_correct);
+    text-shadow: 0 0 1px var(--green_correct);
     color: var(--dark);
 }

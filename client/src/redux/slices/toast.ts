@@ -4,7 +4,8 @@ import { HIDDEN } from "../../common/constants";
 
 const initialState = {
     status: HIDDEN,
-    message: 'test',
+    message: '',
+    mood: '',
 }
 
 const slice = createSlice({
@@ -12,9 +13,10 @@ const slice = createSlice({
     initialState,
     reducers: {
         setMessage(state, action) {
-            const { message, status } = action.payload;
+            const { message, status, mood } = action.payload;
             state.status = status;
             state.message = message;
+            state.mood = mood;
         }
     }
 });
