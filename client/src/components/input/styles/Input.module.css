@@ -1,0 +1,8 @@
+.invalid {
+    border: 1px solid var(--red_incorrect);
+    box-shadow: 0 0 3px var(--red_incorrect);
+}
+
+.invalid:focus {
+    outline: 1px solid var(--red_incorrect);
+}
