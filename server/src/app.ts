@@ -15,7 +15,7 @@ app.use(cors());
 
 app.use('/question', auth, questionRouter);
 app.use('/train', auth, trainRouter);
-app.use('/user', userRouter);
+app.use('/user', userRouter); 
 
 
 export default app; // Export app for testing
