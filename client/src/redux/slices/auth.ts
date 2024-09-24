@@ -5,6 +5,7 @@ import { IDLE } from "../../common/constants";
 const initialState = {
     status: IDLE,
     token: '',
+    isAuthenticated: false,
 }
 
 const slice = createSlice({
@@ -13,7 +14,7 @@ const slice = createSlice({
     reducers: {
         saveToken(state, action) {
             state.token = action.payload;
-            console.log('saveToken', state.token)
+            state.isAuthenticated = true;
         },
     },
 });
