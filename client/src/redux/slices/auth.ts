@@ -16,10 +16,14 @@ const slice = createSlice({
             state.token = action.payload;
             state.isAuthenticated = true;
         },
+        logout(state) {
+            state.token = '';
+            state.isAuthenticated = false;
+        }
     },
 });
 
 
-export const { saveToken } = slice.actions;
+export const { saveToken, logout } = slice.actions;
 
 export default slice.reducer;
