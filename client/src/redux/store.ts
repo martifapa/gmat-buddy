@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import questionSlice from "./slices/question";
 import toastSlice from "./slices/toast";
 import readingQuestionSlice from "./slices/readingQuestion";
+import authSlice from "./slices/auth";
 
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
         questions: questionSlice,
         readingQuestions: readingQuestionSlice,
         toast: toastSlice,
+        auth: authSlice,
     }
 });
 
