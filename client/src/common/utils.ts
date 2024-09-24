@@ -26,3 +26,13 @@ export const setClassNames = (id: number, selected: number, correct: number ) =>
     }
     return ''; // No class applies
 };
+
+// JWT TOKEN
+export const authHeader = () => {
+    const token = store.getState().auth.token;
+    return {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    };
+};
