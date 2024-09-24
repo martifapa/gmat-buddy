@@ -7,6 +7,7 @@ import QuestionList from "../modules/questionList/components/QuestionList";
 import Login from "../modules/login/components/Login";
 import Register from "../modules/register/components/Register";
 import Settings from "../modules/settings/components/Settings";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 
 const router = createBrowserRouter([
@@ -16,15 +17,15 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <QuestionList />
+                element: <ProtectedRoute element={<QuestionList />} />
             },
             {
                 path: 'question/:id',
-                element: <QuestionDetail />
+                element: <ProtectedRoute element={<QuestionDetail />} />
             },
             {
                 path: 'custom',
-                element: <CustomQuestion />
+                element: <ProtectedRoute element={<CustomQuestion />} />
             },
             {
                 path: 'login',
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'settings',
-                element: <Settings />
+                element: <ProtectedRoute element={<Settings />} />
             }
         ],
     }
