@@ -5,7 +5,7 @@ import { useCustomAnswers, useAutoResizeTextArea, useCustomQuestion } from "../h
 import { saveQuestion } from "../../../redux/slices/question";
 import CustomAnswer from "./CustomAnswer";
 import useToggle from "../../navBar/hooks/useToggle";
-import { QUESTION_TYPES } from "../../../common/constants";
+import { QUESTION_TYPES, SUCCESS } from "../../../common/constants";
 import ButtonWithLoadingSpinner from "../../../components/ButtonWithLoadingSpinner/components/ButtonWithLoadingSpinner";
 
 import styles from "../styles/CustomQuestion.module.css";
@@ -46,7 +46,7 @@ const CustomQuestion = () => {
     const handleSaveQuestion = () => {
         const readingQuestionId = null; // To remove when saving reading-questions is supported
         dispatch(saveQuestion({ question, type: questionType, answers, readingQuestionId }));
-        showToastMessage('Question saved correctly');
+        showToastMessage('Question saved correctly', SUCCESS);
     };
 
     return (

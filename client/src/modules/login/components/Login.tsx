@@ -7,9 +7,10 @@ import { fetchQuestions } from '../../../redux/slices/question';
 import { fetchReadingQuestions } from '../../../redux/slices/readingQuestion';
 import { login } from '../../../services/auth';
 import { saveToken } from '../../../redux/slices/auth';
+import { showToastMessage } from '../../../common/utils';
+import { ERROR } from '../../../common/constants';
 
 import styles from '../styles/Login.module.css';
-import { showToastMessage } from '../../../common/utils';
 
 
 export default function Login() {
@@ -29,7 +30,7 @@ export default function Login() {
       dispatch(fetchReadingQuestions());
       navigate('/');
     } else {
-      showToastMessage(error)
+      showToastMessage(error, ERROR)
     }
     
   };
