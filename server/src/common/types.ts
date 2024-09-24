@@ -1,3 +1,6 @@
+import { Request } from "express";
+import { JwtPayload } from "jsonwebtoken";
+
 
 // TRAIN DATA TYPES
 export interface TrainQuestion {
@@ -70,3 +73,22 @@ export interface RequestReadingQuestion {
 
 // Union types
 export type RequestFullQuestion = RequestQuestion | RequestReadingQuestion;
+
+// USER
+interface UserBase {
+    email: string,
+    username: string,
+}
+
+export interface UserRequest extends UserBase {
+    password: string,
+}
+
+export interface User extends UserBase {
+    id: number,
+    passwordHash: string,
+}
+
+export interface CustomRequest extends Request {
+    token: string | JwtPayload,
+}

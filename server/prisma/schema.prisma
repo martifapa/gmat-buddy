@@ -14,6 +14,15 @@ datasource db {
 }
 
 
+// User model
+model User {
+  id              Int     @id @default(autoincrement())
+  email           String  @unique
+  username        String  @unique
+  password_hash   String
+}
+
+
 // Train data models
 model TrainQuestion {
   id                Int                @id @default(autoincrement())
