@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom";
+
 import useToggle from "../hooks/useToggle";
+import DropdownOption from "./DropdownOption";
 
 import style from "../styles/NavBar.module.css";
+import { useAppDispatch, useAppSelector } from "../../../common/hooks/redux";
+import { logout } from "../../../redux/slices/auth";
 
 
 const Navbar = () => {
     const [toggleState, { toggle }] = useToggle();
+    const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+    const dispatch = useAppDispatch();
+    
+    const handleLogout = () => {
+        dispatch(logout());
+    }
 
     return (<div className={style.navbar}>
         <p className={style.logo}><Link to="/"><span>GMAT</span> assistant</Link></p>
@@ -17,14 +27,24 @@ const Navbar = () => {
                 {toggleState && (
                     <div className={style['profile-dropdown']}>
                         <div className={style['dropdown-content']}>
-                            <Link to="login">
-                                <img src="/logout.svg" alt="Log out icon" />
-                                <p>Log out</p>
-                            </Link>
-                            <Link to="settings">
-                                <img src="/settings.svg" alt="Settings icon" />
-                                <p>Settings</p>
-                            </Link>
+                            {
+                                isAuthenticated
+                                ? <DropdownOption
+                                    route="/login"
+                                    imgSrc="/logout.svg"
+                                    alt="Log out icon"
+                                    label="Log out"
+                                    onClick={handleLogout}
+                                />
+                                : <DropdownOption
+                                    route="/login"
+                                    imgSrc="/login.svg"
+                                    alt="Login icon"
+                                    label="Login"
+                                    onClick={handleLogout}
+                                /> 
+                            }
+                            <DropdownOption route="/settings" imgSrc="/settings.svg" alt="Settings icon" label="Settings"/>
                         </div>
                     </div>
                 )}
