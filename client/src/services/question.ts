@@ -1,13 +1,16 @@
 import axios from 'axios';
+
 import { BASE_URL } from '../common/constants';
 import { AiAnswer, FullQuestion, FullQuestionRequest, ReadingQuestion } from '../common/types/question';
+import { authHeader } from '../common/utils';
 
 
 // SOLVE questions
 const solveQuestion = async (question: string, questionType: string): Promise<AiAnswer> => {
     const response = await axios.post(
         `${BASE_URL}/question/solve`,
-        { question, questionType }
+        { question, questionType },
+        authHeader(), // add token to headers
     );
     
     return response.data;
@@ -16,7 +19,8 @@ const solveQuestion = async (question: string, questionType: string): Promise<Ai
 const getNewAnswer = async (question: string, previousAnswer: string): Promise<AiAnswer> => {
     const response = await axios.post(
         `${BASE_URL}/question/solve/new`,
-        { question, previousAnswer }
+        { question, previousAnswer },
+        authHeader(),
     );
     
     return response.data.answer;
@@ -24,13 +28,25 @@ const getNewAnswer = async (question: string, previousAnswer: string): Promise<A
 
 // GET questions
 const getAllQuestions = async (): Promise<FullQuestion[]> => {
-    const response = await axios.get(`${BASE_URL}/question/all`);
-
-    return response.data;
+    try {
+        const response = await axios.get(
+            `${BASE_URL}/question/all`,
+            authHeader(),
+        );
+        
+        return response.data;
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 };
 
 const getAllReadingQuestions = async (): Promise<ReadingQuestion[]> => {
-    const response = await axios.get(`${BASE_URL}/question/all/reading`);
+    const headers = authHeader();
+    const response = await axios.get(
+        `${BASE_URL}/question/all/reading`,
+        headers,
+    );
 
     return response.data;
 }
@@ -40,6 +56,7 @@ const createQuestion = async (questionRequest: FullQuestionRequest): Promise<Ful
     const response = await axios.post(
         `${BASE_URL}/question/save/one`,
         questionRequest,
+        authHeader(),
     );
 
     return response.data;
