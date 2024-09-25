@@ -30,7 +30,11 @@ export default function Register() {
             <Input label='Email' type='email' value={email} setValue={setEmail} isValid={emailIsValid} />
             <Input label='Password' type='password' value={password} setValue={setPassword} isValid={passwordIsValid} />
             <Input label='Repeat password' type='password' value={password2} setValue={setPassword2} isValid={password2IsValid && password === password2} />
-            <input type="submit" value="Register" /> 
+            <input
+              type="submit"
+              value="Register"
+              className={usernameIsValid && emailIsValid && passwordIsValid && password2IsValid ? '' : styles.disabled}
+            /> 
         </form>
     </div>
   )
