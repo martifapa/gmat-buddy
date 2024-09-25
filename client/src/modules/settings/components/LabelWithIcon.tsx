@@ -13,7 +13,7 @@ interface Props {
 export default function LabelWithIcon({ to, source, alt, label }: Props) {
   return (
     <Link className={styles['label-with-icon']} to={to}>
-        <img className={styles.icon} src={`/public/${source}`} alt={alt} />
+        <img className={styles.icon} src={`/${source}`} alt={alt} />
         <p>{label}</p>
     </Link>
   )

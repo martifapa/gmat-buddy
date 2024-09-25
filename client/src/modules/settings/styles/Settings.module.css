@@ -2,7 +2,7 @@
 
 
 .settings-container {
-    margin: 0 10px;
+    margin: 0 40px;
     display: grid;
     grid-template-columns: 1fr 4fr;
     gap: 10px;
@@ -26,8 +26,10 @@
 }
 
 .content {
-    background-color: mistyrose;
-
+    padding: 0px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 .label-with-icon {
@@ -44,4 +46,55 @@
 .icon {
     max-height: 20px;
     max-width: 20px;
-  }
+}
+
+/* SETTINGS PAGES */
+.section {
+    position: relative;
+    padding: 30px 20px 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 0 2px var(--dark-grey);
+    border-radius: 4px;
+}
+
+.section-title {
+    position: absolute;
+    top: 0;
+    left: 3%;
+    padding: 5px;
+    background-color: var(--light-grey);
+    color: var(--dark-grey);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    transform: translateY(-50%);
+}
+
+.section fieldset {
+    display: flex;
+    gap: 15px;
+}
+
+.section input {
+    padding: 5px 10px;
+    box-shadow: 0 0 2px var(--dark-grey);
+    border-radius: 4px;
+}
+
+.section input:focus {
+    outline: 1px solid var(--dark-grey);
+}
+
+.section button {
+    padding: 8px 18px;
+    background-color: var(--base-blue);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--white);
+    max-width: 200px;
+}
+
+.section button:hover {
+    background-color: var(--deep-blue);
+}
