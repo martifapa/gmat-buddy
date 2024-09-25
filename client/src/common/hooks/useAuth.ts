@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from './redux';
@@ -16,13 +16,11 @@ export default function useAuth() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     
+    // Call useInputForm hook with correspondent RegEx
     const { value: username, setValue: setUsername, isValid: usernameIsValid } = useInputForm({ regex: /^(?=.{6,20})[a-zA-Z0-9]+/g });
     const { value: email, setValue: setEmail, isValid: emailIsValid } = useInputForm({ regex: /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/gm });
     const { value: password, setValue: setPassword, isValid: passwordIsValid } = useInputForm({ regex: /(?=.{4,})[a-zA-Z0-9.!_?]+/g });
     const { value: password2, setValue: setPassword2, isValid: password2IsValid } = useInputForm({ regex: /(?=.{4,})[a-zA-Z0-9.!_?]+/g });
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [password2, setPassword2] = useState('');
     
     const handleLogout = () => {
         dispatch(logout());
