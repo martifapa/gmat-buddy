@@ -1,6 +1,13 @@
 @import '../../../common/globals.css';
 
 
+.disabled {
+    border: 1px solid var(--dark-grey);
+    background-color: var(--light-grey) !important;
+    color: var(--dark-grey) !important;
+    pointer-events: none;
+}
+
 .form-container {
     border: 3px solid var(--dark-grey);
     border-radius: 4px;

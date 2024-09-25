@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import Input from '../../../components/input/Input';
+import Input from '../../../components/input/components/Input';
 
 import styles from '../styles/Login.module.css';
 import useAuth from '../../../common/hooks/useAuth';
