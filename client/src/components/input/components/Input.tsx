@@ -30,7 +30,7 @@ export default function Input({ label, type, value, setValue, isValid }: Props) 
           { label }
           <div className={styles.input}>
             <input
-                type={visibility ? 'text' : 'password'}
+                type={['text', 'email'].includes(type) || visibility ? 'text' : 'password'}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 className={styles[className]}
