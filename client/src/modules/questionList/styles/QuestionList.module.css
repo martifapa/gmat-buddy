@@ -229,8 +229,8 @@ h2 {
 }
 
 .question-answer.incorrect {
-    border: 1px solid var(--red_incorrect);
-    box-shadow: 0 0 4px var(--red_incorrect);
+    border: 1px solid var(--red-incorrect);
+    box-shadow: 0 0 4px var(--red-incorrect);
 }
 
 .question-answer.correct {

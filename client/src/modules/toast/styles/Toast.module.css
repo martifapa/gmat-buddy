@@ -39,15 +39,15 @@
 
 /* States mood */
 .toast.error p {
-    border: 1px solid var(--red_incorrect);
-    box-shadow: 0 0 7px var(--red_incorrect);
-    text-shadow: 0 0 1px var(--red_incorrect);
+    border: 1px solid var(--red-incorrect);
+    box-shadow: 0 0 7px var(--red-incorrect);
+    text-shadow: 0 0 1px var(--red-incorrect);
     color: var(--dark);
 }
 
 .toast.success p {
-    border: 1px solid var(--green_correct);
-    box-shadow: 0 0 7px var(--green_correct);
-    text-shadow: 0 0 1px var(--green_correct);
+    border: 1px solid var(--green-correct);
+    box-shadow: 0 0 7px var(--green-correct);
+    text-shadow: 0 0 1px var(--green-correct);
     color: var(--dark);
 }
