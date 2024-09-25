@@ -1,5 +1,6 @@
-import styles from '../styles/Settings.module.css';
 import LabelWithIcon from './LabelWithIcon';
+
+import styles from '../styles/Settings.module.css';
 
 
 export default function Settings() {

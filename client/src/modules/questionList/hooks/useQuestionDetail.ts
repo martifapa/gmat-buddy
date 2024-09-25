@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { getNewAnswer, solveQuestion } from '../../../services/question';
 import { useNavigate } from 'react-router-dom';
+
+import { getNewAnswer, solveQuestion } from '../../../services/question';
 import { useAppSelector } from '../../../common/hooks/redux';
 
 
