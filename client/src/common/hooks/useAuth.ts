@@ -8,17 +8,21 @@ import { fetchQuestions } from '../../redux/slices/question';
 import { fetchReadingQuestions } from '../../redux/slices/readingQuestion';
 import { showToastMessage } from '../utils';
 import { ERROR, SUCCESS } from '../constants';
+import useInputForm from './useInputForm';
 
 
 export default function useAuth() {
     const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [password2, setPassword2] = useState('');
+    
+    const { value: username, setValue: setUsername, isValid: usernameIsValid } = useInputForm({ regex: /^(?=.{6,20})[a-zA-Z0-9]+/g });
+    const { value: email, setValue: setEmail, isValid: emailIsValid } = useInputForm({ regex: /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/gm });
+    const { value: password, setValue: setPassword, isValid: passwordIsValid } = useInputForm({ regex: /(?=.{4,})[a-zA-Z0-9.!_?]+/g });
+    const { value: password2, setValue: setPassword2, isValid: password2IsValid } = useInputForm({ regex: /(?=.{4,})[a-zA-Z0-9.!_?]+/g });
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [password2, setPassword2] = useState('');
     
     const handleLogout = () => {
         dispatch(logout());
@@ -50,15 +54,19 @@ export default function useAuth() {
     }
 
     return {
-        email,
         username,
-        password,
-        password2,
-        isAuthenticated,
-        setEmail,
+        usernameIsValid,
         setUsername,
+        email,
+        emailIsValid,
+        setEmail,
+        password,
+        passwordIsValid,
         setPassword,
+        password2,
+        password2IsValid,
         setPassword2,
+        isAuthenticated,
         logout: handleLogout,
         login: handleLogin,
         register: handleRegister,
