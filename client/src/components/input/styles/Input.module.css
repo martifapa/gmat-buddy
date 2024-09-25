@@ -1,3 +1,24 @@
+@import '../../../common/globals.css';
+
+
+.input {
+    position: relative;
+}
+
+.input img {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 20;
+    transform: translateY(-50%);
+    background-color: var(--light-grey);
+    cursor: pointer;
+}
+
+.input input::selection {
+    color: var(--base-blue);
+}
+
 .invalid {
     border: 1px solid var(--red_incorrect);
     box-shadow: 0 0 3px var(--red_incorrect);
@@ -5,4 +26,9 @@
 
 .invalid:focus {
     outline: 1px solid var(--red_incorrect);
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
 }
