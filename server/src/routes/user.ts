@@ -36,7 +36,7 @@ router.post('/register', async (request, response) => {
     try {
         const result = await register(user);
         if (result) {
-            return response.status(200).json( { user: 'Created successfully' }).end();
+            return response.json( { user: 'Created successfully' }).end();
         }
         return response.status(400).json({ error: 'User not created' }).end();
     } catch (error) {

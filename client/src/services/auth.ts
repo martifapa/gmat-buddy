@@ -33,7 +33,7 @@ export const register = async (username: string, email: string, password: string
 
     try {
         const response = await axios.post(
-            `${BASE_URL}/register`,
+            `${BASE_URL}/user/register`,
             { username, email, password },
         );
         return response.data;
