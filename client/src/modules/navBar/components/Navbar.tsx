@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 import useToggle from "../hooks/useToggle";
 import DropdownOption from "./DropdownOption";
+import useAuth from "../../../common/hooks/useAuth";
 
 import style from "../styles/NavBar.module.css";
-import useAuth from "../../../common/hooks/useAuth";
 
 
 const Navbar = () => {
