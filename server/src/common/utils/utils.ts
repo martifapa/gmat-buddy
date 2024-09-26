@@ -10,13 +10,16 @@ export const AIAnswerToObject = (text: string) => {
       const answerIdxMatch =  text.match(answerIdxRegex);
       const explantionMatch = text.match(explanationRegex);
 
-      if (answerIdxMatch && explantionMatch) {
+      if (answerIdxMatch && explantionMatch) { // first explanation call
         const answerIdx = parseInt(answerIdxMatch[1], 10); // Get capture group and convert to number
         const explanation = explantionMatch[0];
 
-        const json = { answerIdx, explanation };
-        return json;
-      } else {
+        return { answerIdx, explanation };
+      } else if (explantionMatch) { // new explanation call
+        const explanation = explantionMatch[0];
+
+        return { explanation };
+      } {
         console.log('Regex match failed');
         return null;
       }
