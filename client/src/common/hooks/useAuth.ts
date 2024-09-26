@@ -9,6 +9,8 @@ import { fetchReadingQuestions } from '../../redux/slices/readingQuestion';
 import { showToastMessage } from '../utils';
 import { ERROR, SUCCESS } from '../constants';
 import useInputForm from './useInputForm';
+import { setUser } from '../../redux/slices/user';
+import { getUserInfo } from '../../services/user';
 
 
 export default function useAuth() {
@@ -31,9 +33,13 @@ export default function useAuth() {
         const { token, error } = await login(username, password);
         
         if (token) { // login successful
-          dispatch(saveToken(token));
+          // Save to redux slices
+          dispatch(saveToken(token)); // authSlice
+          dispatch(setUser(await getUserInfo(username))); // userSlice
+          // fetch reading and non-reading questions
           dispatch(fetchQuestions());
           dispatch(fetchReadingQuestions());
+          // Redirect
           navigate('/');
         } else {
           showToastMessage(error, ERROR)
@@ -45,7 +51,7 @@ export default function useAuth() {
         const { user, error } = await register(username, email, password, password2);
         if (user) { // login user when register successful
             handleLogin();
-            showToastMessage('Welcome aboard!', SUCCESS);
+            showToastMessage(`Welcome aboard, ${username}!`, SUCCESS);
         } else {
             showToastMessage(error, ERROR);
         }
