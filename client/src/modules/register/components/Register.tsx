@@ -26,14 +26,14 @@ export default function Register() {
     <div className={styles['form-container']}>
         <h2 className={styles.title}>Welcome aboard!</h2>
         <form onSubmit={register} className={styles['user-form']}>
-            <Input label='Username' type='text' value={username} setValue={setUsername} isValid={usernameIsValid} />
+            <Input label='Username' type='text' value={username} setValue={setUsername} isValid={usernameIsValid} hint={true} hintLabel='From 6 to 20 characters' />
             <Input label='Email' type='email' value={email} setValue={setEmail} isValid={emailIsValid} />
-            <Input label='Password' type='password' value={password} setValue={setPassword} isValid={passwordIsValid} />
+            <Input label='Password' type='password' value={password} setValue={setPassword} isValid={passwordIsValid} hint={true} hintLabel='At least 6 characters' />
             <Input label='Repeat password' type='password' value={password2} setValue={setPassword2} isValid={password2IsValid && password === password2} />
             <input
               type="submit"
               value="Register"
-              className={usernameIsValid && emailIsValid && passwordIsValid && password2IsValid ? '' : styles.disabled}
+              className={usernameIsValid && emailIsValid && passwordIsValid && password2IsValid && password === password2 ? '' : styles.disabled}
             /> 
         </form>
     </div>
