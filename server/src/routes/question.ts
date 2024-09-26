@@ -35,7 +35,8 @@ router.post('/solve/new', async (request, response) => {
 
     try {
         const explanation = await provideDifferentExplanation(question, previousAnswer);
-        response.json({ explanation }).end();
+        const explanationObject = AIAnswerToObject(explanation);
+        response.json(explanationObject).end();
     } catch (error) {
         console.log(error),
         response.status(500).json({ error: 'Failed to solve question' }).end();
