@@ -35,10 +35,16 @@ const CustomQuestion = () => {
         setNewAnswer,
         addAnswer,
         deleteAnswer,
+        clearAnswers,
     } = useCustomAnswers();
 
     const questionTextareaRef = useAutoResizeTextArea();
     const answerTextareaRef = useAutoResizeTextArea();
+
+    const clearQuestion = () => {
+        clearAnswer();
+        clearAnswers();
+    }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setQuestion(event.target.value);
@@ -104,7 +110,7 @@ const CustomQuestion = () => {
                     <textarea
                         className={styles.input}
                         placeholder="Write the answer option here"
-                        onChange={setNewAnswer}
+                        onChange={(e) => setNewAnswer(e.target.value)}
                         value={newAnswer}
                         ref={answerTextareaRef} rows={1}
                     />
@@ -118,8 +124,8 @@ const CustomQuestion = () => {
             <div className={styles.buttons}>
 
                 <button
-                    onClick={clearAnswer}
-                    className={question ? '' : styles.disabled}    
+                    onClick={clearQuestion}
+                    className={question || answers.length > 0 ? '' : styles.disabled}    
                 >Clear</button>
 
                 <ButtonWithLoadingSpinner
