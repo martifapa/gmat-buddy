@@ -1,6 +1,7 @@
 import express from 'express';
 import { getUsers, login, register } from '../controllers/user';
 import { auth } from '../common/middleware';
+import { findUser } from '../services/user';
 
 
 const router = express.Router();
@@ -8,6 +9,12 @@ const router = express.Router();
 router.get('/all', auth, async (_request, response) => {
     const users = await getUsers();
     return response.json(users).end();
+});
+
+router.post('/', auth, async (request, response) => {
+    const { username } = request.body;
+    const user = await findUser(username);
+    return response.json(user).end();
 });
 
 router.post('/login', async (request, response) => {
