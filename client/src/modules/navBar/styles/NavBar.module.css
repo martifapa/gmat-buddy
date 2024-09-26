@@ -19,6 +19,10 @@
     color: var(--deep-blue);
 }
 
+.logo a {
+    color: var(--white);
+}
+
 .navigation {
     display: flex;
     align-items: center;
