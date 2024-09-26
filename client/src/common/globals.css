@@ -16,9 +16,10 @@
 
 #root {
   min-height: 100vh;
+  padding-bottom: 30px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 40px;
   background-color: var(--light-grey);
 }
 
