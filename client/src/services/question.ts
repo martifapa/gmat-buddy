@@ -23,7 +23,7 @@ const getNewAnswer = async (question: string, previousAnswer: string): Promise<A
         authHeader(),
     );
     
-    return response.data.answer;
+    return response.data;
 };
 
 // GET questions
