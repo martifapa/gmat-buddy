@@ -2,7 +2,10 @@
 
 
 .navbar {
-    height: 100px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    height: 80px;
     padding: 0 15%;
     display: flex;
     justify-content: space-between;
@@ -48,6 +51,7 @@
     position: absolute;
     top: calc(100% + 10px);
     right: 5%;
+    z-index: 99;
     padding: 4px;
     background-color: var(--light-grey);
     box-shadow: 0 0 5px var(--light-blue);
