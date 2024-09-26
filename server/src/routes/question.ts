@@ -34,8 +34,8 @@ router.post('/solve/new', async (request, response) => {
     }
 
     try {
-        const answer = await provideDifferentExplanation(question, previousAnswer);
-        response.json({ answer }).end();
+        const explanation = await provideDifferentExplanation(question, previousAnswer);
+        response.json({ explanation }).end();
     } catch (error) {
         console.log(error),
         response.status(500).json({ error: 'Failed to solve question' }).end();
