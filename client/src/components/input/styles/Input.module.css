@@ -1,6 +1,11 @@
 @import '../../../common/globals.css';
 
 
+.hint {
+    color: var(--base-blue);
+    font-size: 0.75rem;
+}
+
 .input {
     position: relative;
 }

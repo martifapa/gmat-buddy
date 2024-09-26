@@ -9,9 +9,11 @@ interface Props {
     value: string,
     setValue: (value: string) => void,
     isValid: null | boolean,
+    hint?: boolean,
+    hintLabel?: string,
 }
 
-export default function Input({ label, type, value, setValue, isValid }: Props) {
+export default function Input({ label, type, value, setValue, isValid, hint=false, hintLabel }: Props) {
   const [visibility, setVisibility] = useState(false);
   const [iconPath, setIconPath] = useState('/visibility.svg');
 
@@ -29,6 +31,9 @@ export default function Input({ label, type, value, setValue, isValid }: Props) 
   return (
       <label>
           { label }
+          { hint &&
+            <label className={styles.hint}>{hintLabel}</label>
+          }
           <div className={styles.input}>
             <input
                 type={['text', 'email'].includes(type) || visibility ? 'text' : 'password'}
