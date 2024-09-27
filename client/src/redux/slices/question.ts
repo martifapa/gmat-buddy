@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { FullQuestionRequest, QuestionState } from "../../common/types/question";
 import { IDLE, LOADING } from "../../common/constants";
-import { createQuestion, getAllQuestions } from "../../services/question";
+import { createQuestion, createQuestionsBulk, getAllQuestions } from "../../services/question";
 
 
 const initialState: QuestionState = {
@@ -22,6 +22,14 @@ export const saveQuestion = createAsyncThunk(
     'questions/saveQuestion',
     async (questionRequest: FullQuestionRequest) => {
         const response = await createQuestion(questionRequest);
+        return response;
+    }
+);
+
+export const saveQuestionsBulk = createAsyncThunk(
+    'questions/saveQuestionsBulk',
+    async (questions: FullQuestionRequest[]) => {
+        const response = await createQuestionsBulk(questions);
         return response;
     }
 );
@@ -47,6 +55,14 @@ const slice = createSlice({
             .addCase(saveQuestion.fulfilled, (state, action) => {
                 state.status = IDLE;
                 state.questionBank = [...state.questionBank, action.payload];
+            })
+            // SAVE question(s)
+            .addCase(saveQuestionsBulk.pending, (state) => {
+                state.status = LOADING;
+            })
+            .addCase(saveQuestionsBulk.fulfilled, (state, action) => {
+                state.status = IDLE;
+                state.questionBank = [...state.questionBank, ...action.payload];
             })
     }
 });
