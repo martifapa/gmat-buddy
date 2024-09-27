@@ -1,50 +1,33 @@
-import React, { useState } from 'react';
-
-import { ACCEPTED_FILE_FORMATS } from '../../../common/constants';
 import LabeledIcon from './LabeledIcon';
+import { ACCEPTED_FILE_FORMATS } from '../../../common/constants';
+import useDropFile from '../hooks/useDropFile';
 
 import styles from '../styles/NavBar.module.css';
 
 
 interface Props {
-    onClick: () => void,
+    togglePopup: () => void,
     className: string,
 }
 
-export default function AddInBulkPopup({ onClick, className }: Props) {
-    const [fileName, setFileName] = useState('');
-    
-    const dropHandler = (event: React.DragEvent) => {
-        event.preventDefault(); // Prevent file from being opened
+export default function AddInBulkPopup({ togglePopup, className }: Props) {
+    const {
+        fileName,
+        fileLoaded,
+        dropHandler,
+        dragOverHandler,
+        handleBulkUpload,
+    } = useDropFile();    
 
-        if (event.dataTransfer.items) { // Access ITEMS
-            const item = [...event.dataTransfer.items][0];
-            if (item.kind === 'file') { // reject if NON-FILE files
-                const file = item.getAsFile();
-                if (file) {
-                    console.log(file.name); // process file and upload questions
-                    setFileName(file.name);
-                }
-            };
-        } else { // Access the FILES
-            const file = [...event.dataTransfer.files][0];
-            console.log(file.name);
-            setFileName(file.name)
-          }
-    }
-    
-    const dragOverHandler = (event: React.DragEvent) => {
-        event.preventDefault(); // Prevent file from being opened
-    }
-
-    const handleBulkUpload = () => {
-
+    const handleBulkUploadAndTogglePopup = () => {
+        togglePopup();
+        handleBulkUpload();
     }
 
     return (
     <div className={`${styles['popup-container']} ${styles[className]}`}>
         <div className={styles.popup}>
-            <button className={styles.close} onClick={onClick}>
+            <button className={styles.close} onClick={togglePopup}>
                 <img src="/close.svg" alt="Close icon" />
             </button>
             <h2>Question bulk upload</h2>
@@ -69,7 +52,7 @@ export default function AddInBulkPopup({ onClick, className }: Props) {
                 </div>
             </div>
             <div
-                className={styles['drop-zone']}
+                className={`${styles['drop-zone']} ${fileLoaded ? styles.loaded : ''}`}
                 onDrop={dropHandler}
                 onDragOver={dragOverHandler}
             >
@@ -85,7 +68,7 @@ export default function AddInBulkPopup({ onClick, className }: Props) {
             {
                 fileName === ''
                 ? null
-                : <button className={styles.button} onClick={handleBulkUpload}>Upload</button>
+                : <button className={styles.button} onClick={handleBulkUploadAndTogglePopup}>Upload</button>
             }
         </div>
     </div>

@@ -35,7 +35,7 @@ export interface ReadingQuestionState {
 }
 
 
-// AI RESPONSS
+// AI RESPONSES
 export interface AiAnswer {
     answerIdx: number,
     explanation: string,

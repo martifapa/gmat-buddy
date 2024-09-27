@@ -18,7 +18,7 @@ const Navbar = () => {
     <>
         {
             toggleBulkState &&
-            <AddInBulkPopup onClick={toggleBulk} className={toggleBulkState ? 'show' : ''}/>
+            <AddInBulkPopup togglePopup={toggleBulk} className={toggleBulkState ? 'show' : ''}/>
         }
         <div className={style.navbar}>
             <p className={style.logo}><Link to="/"><span>GMAT</span> assistant</Link></p>
