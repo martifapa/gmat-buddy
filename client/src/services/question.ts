@@ -62,10 +62,21 @@ const createQuestion = async (questionRequest: FullQuestionRequest): Promise<Ful
     return response.data;
 }
 
+const createQuestionsBulk = async (questions: FullQuestionRequest[]): Promise<FullQuestion[]> => {
+    const response = await axios.post(
+        `${BASE_URL}/save/list`,
+        questions,
+        authHeader(),
+    );
+
+    return response.data;
+}
+
 export {
     solveQuestion,
     getNewAnswer,
     getAllQuestions,
     getAllReadingQuestions,
     createQuestion,
+    createQuestionsBulk
 };
