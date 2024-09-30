@@ -1,4 +1,5 @@
 import store from "../redux/store";
+import { BulkQuestionsResponse } from "./types/question";
 
 
 // UI
@@ -36,3 +37,9 @@ export const toCamelCase = (text: string) => {
         .replace(/[-_\s]+(.)?/g, (_, c) => c ? c.toUpperCase() : '')
         .replace(/^./, str => str.toLowerCase());
 };
+
+
+// TYPES
+export const isBulkQuestionsResponse = (payload: any): payload is BulkQuestionsResponse => {
+    return payload && Array.isArray(payload.questions) && Array.isArray(payload.errors);
+}
