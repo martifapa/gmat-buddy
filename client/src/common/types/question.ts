@@ -23,6 +23,11 @@ export interface ReadingQuestion {
     questions: QuestionWithReadingId[],
 }
 
+export interface BulkQuestionsResponse {
+    questions: FullQuestion[],
+    errors: FullQuestionRequest[],
+}
+
 // REDUX
 export interface QuestionState {
     status: string,
