@@ -79,3 +79,31 @@ describe('GET /questions/all/reading', () => {
         expect(response.body).toEqual({ error: 'Internal server error' });
     });
 });
+
+describe('POST /save/one', () => {
+    it('should save a reading question', async () => {
+
+    });
+
+    it('should save a non-reading question', async () => {
+
+    });
+
+    it('should handle malformed questions', async () => {
+
+    });
+});
+
+describe('POST /save/list', () => {
+    it('should handle wellformed questions', async () => {
+
+    });
+
+    it('should handle malformed questions', async () => {
+
+    });
+
+    it('should handle both wellformed and malformed questions', async () => {
+
+    });
+});
