@@ -3,6 +3,7 @@ import { ACCEPTED_FILE_FORMATS } from '../../../common/constants';
 import useDropFile from '../hooks/useDropFile';
 
 import styles from '../styles/NavBar.module.css';
+import ButtonWithLoadingSpinner from '../../../components/ButtonWithLoadingSpinner/components/ButtonWithLoadingSpinner';
 
 
 interface Props {
@@ -19,9 +20,9 @@ export default function AddInBulkPopup({ togglePopup, className }: Props) {
         handleBulkUpload,
     } = useDropFile();    
 
-    const handleBulkUploadAndTogglePopup = () => {
+    const handleBulkUploadAndTogglePopup = async () => {
         togglePopup();
-        handleBulkUpload();
+        await handleBulkUpload();
     }
 
     return (
@@ -40,7 +41,7 @@ export default function AddInBulkPopup({ togglePopup, className }: Props) {
                     <div className={`${styles.row} ${styles.header}`}>
                         <p className={styles.cell}>Question</p>
                         <p className={styles.cell}>Answers</p>
-                        <p className={styles.cell}>Question type</p>
+                        <p className={styles.cell}>Type</p>
                         <p className={styles.cell}>Difficulty</p>
                     </div>
                     <div className={styles.row}>
@@ -68,7 +69,10 @@ export default function AddInBulkPopup({ togglePopup, className }: Props) {
             {
                 fileName === ''
                 ? null
-                : <button className={styles.button} onClick={handleBulkUploadAndTogglePopup}>Upload</button>
+                : <ButtonWithLoadingSpinner
+                    className={styles.button}
+                    onClick={handleBulkUploadAndTogglePopup}
+                    label='Upload' />
             }
         </div>
     </div>
