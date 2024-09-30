@@ -30,7 +30,7 @@ export default function Settings() {
                 <input type="text" defaultValue={username}/>
               </fieldset>
               <fieldset>
-                <label>Email:</label>
+                <label>Email</label>
                 <input type="email" defaultValue={email}/>
               </fieldset>
               <button>Save</button>
@@ -38,10 +38,10 @@ export default function Settings() {
             <div className={styles.section}>
               <h2 className={styles['section-title']}>Security</h2>
               <fieldset>
-                <label>Password:</label>
+                <label>Password</label>
                 <input type="password" />
-                <button>Change password</button>
               </fieldset>
+                <button>Change password</button>
             </div>
         </div>
     </div>

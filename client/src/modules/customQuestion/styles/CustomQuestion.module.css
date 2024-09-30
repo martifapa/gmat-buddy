@@ -224,7 +224,7 @@
     white-space: pre-wrap;
 }
 
-/* CUSTOM ANSWER */
+/* custom answer */
 .answers {
     display: flex;
     flex-direction: column;

@@ -60,7 +60,7 @@ const CustomQuestion = () => {
 
     return (
         <div className={styles['question-detail']}>
-            <h2 className={styles.title}>Custom question solver</h2>
+            <h2 className={styles.title}>Custom question</h2>
             <div className={styles['question-type']}>
                 <div
                     className={styles['dropdown']}

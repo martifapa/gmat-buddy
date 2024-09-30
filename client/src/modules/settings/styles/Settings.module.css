@@ -72,15 +72,28 @@
 }
 
 .section fieldset {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
+.section label {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    transform: translateY(-55%);
+    padding: 1px 4px;
+    background-color: var(--light-grey);
+    color: var(--dark-grey);
+    font-size: .9rem;
+}
+
 .section input {
-    padding: 5px 10px;
+    padding: 5px 10px 2px 10px;
     box-shadow: 0 0 2px var(--dark-grey);
     border-radius: 4px;
+    line-height: 1.9rem;
 }
 
 .section input:focus {
@@ -98,4 +111,42 @@
 
 .section button:hover {
     background-color: var(--deep-blue);
+}
+
+/* PHONE VIEW */
+@media (max-width: 580px) {
+    .settings-container {
+        margin: 0 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        overflow-y: auto;
+    }
+
+    .label-with-icon {
+        min-width: max-content;
+    }
+
+    .content {
+        margin-top: 30px;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;        
+    }
+
+    .section {
+        position: relative;
+        padding: 30px 20px 10px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        box-shadow: 0 0 2px var(--dark-grey);
+        border-radius: 4px;
+    }
+
 }

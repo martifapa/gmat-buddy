@@ -55,9 +55,8 @@ export default function QuestionFilters({
 
   return (
     <div className={styles.filters}>
-      <h2>Filter by</h2>
       
-      <button className={styles['filter-button'] } onClick={ handleResetFilters }>Reset filters</button>
+      <button className={styles['filter-button'] } onClick={handleResetFilters}>Reset</button>
 
       <div className={styles.filter}>
         <p 
