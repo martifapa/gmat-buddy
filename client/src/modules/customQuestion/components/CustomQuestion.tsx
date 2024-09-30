@@ -1,6 +1,5 @@
 import React from "react";
 
-import { showToastMessage } from "../../../common/utils";
 import { useAppDispatch } from "../../../common/hooks/redux";
 import { useCustomAnswers, useAutoResizeTextArea, useCustomQuestion } from "../hooks";
 import { saveQuestion } from "../../../redux/slices/question";
@@ -10,12 +9,15 @@ import { QUESTION_TYPES, SUCCESS } from "../../../common/constants";
 import ButtonWithLoadingSpinner from "../../../components/ButtonWithLoadingSpinner/components/ButtonWithLoadingSpinner";
 
 import styles from "../styles/CustomQuestion.module.css";
+import useToast from "../../../common/hooks/useToast";
 
 
 const CustomQuestion = () => {
     const dispatch = useAppDispatch();
 
     const [toggleState, { toggle }] = useToggle();
+
+    const { toast } = useToast();
 
     const {
         solveQuestion,
@@ -53,7 +55,7 @@ const CustomQuestion = () => {
     const handleSaveQuestion = () => {
         const readingQuestionId = null; // To remove when saving reading-questions is supported
         dispatch(saveQuestion({ question, type: questionType, answers, readingQuestionId }));
-        showToastMessage('Question saved correctly', SUCCESS);
+        toast(SUCCESS, 'Question saved correctly');
     };
 
     return (
