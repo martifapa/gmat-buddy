@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { BASE_URL } from '../common/constants';
-import { AiAnswer, FullQuestion, FullQuestionRequest, ReadingQuestion } from '../common/types/question';
+import { AiAnswer, BulkQuestionsResponse, FullQuestion, FullQuestionRequest, ReadingQuestion } from '../common/types/question';
 import { authHeader } from '../common/utils';
 
 
@@ -62,13 +62,13 @@ const createQuestion = async (questionRequest: FullQuestionRequest): Promise<Ful
     return response.data;
 }
 
-const createQuestionsBulk = async (questions: FullQuestionRequest[]): Promise<FullQuestion[]> => {
+const createQuestionsBulk = async (questions: FullQuestionRequest[]): Promise<BulkQuestionsResponse> => {
     const response = await axios.post(
-        `${BASE_URL}/save/list`,
+        `${BASE_URL}/question/save/list`,
         questions,
         authHeader(),
     );
-
+    
     return response.data;
 }
 

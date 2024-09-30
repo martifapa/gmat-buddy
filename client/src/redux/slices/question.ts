@@ -61,8 +61,9 @@ const slice = createSlice({
                 state.status = LOADING;
             })
             .addCase(saveQuestionsBulk.fulfilled, (state, action) => {
+                const { questions } = action.payload;
                 state.status = IDLE;
-                state.questionBank = [...state.questionBank, ...action.payload];
+                state.questionBank = [...state.questionBank, ...questions];
             })
     }
 });
