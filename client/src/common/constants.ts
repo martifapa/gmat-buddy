@@ -15,4 +15,4 @@ export const READING_TYPE = 'Verbal Reasoning - Reading Comprehension';
 
 // DROP FUNCTIONALITY
 export const ACCEPTED_FILE_FORMATS = ['csv'];
-export const MANDATORY_COLUMNS = ['question', 'answers', 'questionType', 'difficulty'];
+export const MANDATORY_COLUMNS = ['question', 'answers', 'type', 'difficulty'];
