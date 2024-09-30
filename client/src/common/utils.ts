@@ -1,19 +1,5 @@
-import { setMessage } from "../redux/slices/toast";
 import store from "../redux/store";
-import { ACTIVE, FADE, HIDDEN } from "./constants";
 
-
-// TOAST MESSAGES
-export const showToastMessage = async (message: string, mood: string='') => {
-    // Show message with correspondent mood
-    store.dispatch(setMessage({ message, mood, status: ACTIVE }));
-    setTimeout(() => { // Trigger fading after delay, keeping message
-        store.dispatch(setMessage({ message, mood, status: FADE }));
-    }, 3000);
-    setTimeout(() => { // Set message & mood to ''
-        store.dispatch(setMessage({ message: '', mood: '', status: HIDDEN }));
-    }, 3500);
-};
 
 // UI
 export const setClassNames = (id: number, selected: number, correct: number ) => {
@@ -39,4 +25,14 @@ export const authHeader = () => {
             Authorization: 'Bearer ' + token,
         },
     };
+};
+
+
+// UTILS
+export const toCamelCase = (text: string) => {
+    // [-_\s]+ one or more occurrences of "-", "_" or whitespace
+    // (.)? one or zero characters following the previous pattern
+    return text
+        .replace(/[-_\s]+(.)?/g, (_, c) => c ? c.toUpperCase() : '')
+        .replace(/^./, str => str.toLowerCase());
 };

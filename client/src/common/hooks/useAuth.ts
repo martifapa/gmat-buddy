@@ -6,17 +6,18 @@ import { logout, saveToken } from '../../redux/slices/auth';
 import { login, register } from '../../services/auth';
 import { fetchQuestions } from '../../redux/slices/question';
 import { fetchReadingQuestions } from '../../redux/slices/readingQuestion';
-import { showToastMessage } from '../utils';
 import { ERROR, SUCCESS } from '../constants';
 import useInputForm from './useInputForm';
 import { setUser } from '../../redux/slices/user';
 import { getUserInfo } from '../../services/user';
+import useToast from './useToast';
 
 
 export default function useAuth() {
     const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { toast } = useToast();
     
     // Call useInputForm hook with correspondent RegEx
     const { value: username, setValue: setUsername, isValid: usernameIsValid } = useInputForm({ regex: /^(?=.{6,20})[a-zA-Z0-9]+/g });
@@ -42,7 +43,7 @@ export default function useAuth() {
           // Redirect
           navigate('/');
         } else {
-          showToastMessage(error, ERROR)
+            toast(ERROR, error);
         }  
     };
 
@@ -51,9 +52,9 @@ export default function useAuth() {
         const { user, error } = await register(username, email, password, password2);
         if (user) { // login user when register successful
             handleLogin();
-            showToastMessage(`Welcome aboard, ${username}!`, SUCCESS);
+            toast(SUCCESS, `Welcome aboard, ${username}!`);
         } else {
-            showToastMessage(error, ERROR);
+            toast(ERROR, error);
         }
     }
 
