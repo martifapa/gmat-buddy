@@ -1,9 +1,7 @@
-import request from 'supertest';
 import jwt from 'jsonwebtoken';
 
-import app from '../../app';
-import { login } from '../../controllers/user';
-import { findUser } from '../../services/user';
+import { login, register, getUsers } from '../../controllers/user';
+import { findUser, createUser, getAllUsers } from '../../services/user';
 import { authenticate } from '../../common/utils/user';
 
 
@@ -87,21 +85,109 @@ describe('login', () => {
 });
 
 describe('register', () => {
-    it('should create a valid user', async () => {
+    const mockCreateUser = createUser as jest.Mock;
 
+    const validUserRequest = {
+        username: 'validUser',
+        email: 'valid@user.com',
+        password: 'validPassword',
+    };
+
+    const invalidUserRequest = {
+        username: 'missingFields',
+    };
+
+    const validUserResponse = {
+        id: 1,
+        username: validUserRequest.username,
+        email: validUserRequest.email,
+        password_hash: 'validPasswordHash',
+    };
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('should create a valid user', async () => {
+        mockCreateUser.mockResolvedValue(validUserResponse);
+
+        const result = await register(validUserRequest);
+
+        expect(mockCreateUser).toHaveBeenCalledWith(validUserRequest);
+        expect(result).toBe(true);
+    });
+    
+    it('should handle repeated usernames', async () => {
+        mockCreateUser.mockResolvedValueOnce(validUserResponse); // first register successful
+        mockCreateUser.mockResolvedValue(false); // next registers unsuccessful
+
+        const validRegister = await register(validUserRequest); // successful mock
+        const invalidRegister = await register(validUserRequest);
+
+        expect(validRegister).toBe(true);
+
+        expect(mockCreateUser).toHaveBeenNthCalledWith(2, validUserRequest);
+        expect(invalidRegister).toBe(false);
     });
 
     it('should handle malformed requests', async () => {
+        mockCreateUser.mockResolvedValue(null);
 
-    });
+        // @ts-ignore
+        const invalidRegister = await register(invalidUserRequest); // missing fields
 
-    it('should handle repeated usernames', async () => {
-
+        expect(mockCreateUser).toHaveBeenCalledWith(invalidUserRequest);
+        expect(invalidRegister).toBe(false);
     });
 });
 
 describe('getUsers', () => {
-    it('should return all existent users', async () => {
+    const mockGetUsers = getAllUsers as jest.Mock;
 
+    const validUsers = [
+        {
+            id: 1,
+            username: 'validUser1',
+            email: 'valid1@user.com',
+            password_hash: 'validPassword',
+        },
+        {
+            id: 2,
+            username: 'validUser2',
+            email: 'valid2@user.com',
+            password_hash: 'validPassword',
+        }
+    ];
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        jest.mocked(getAllUsers).mockClear();
+    });
+
+    it('should return all existent users', async () => {
+        mockGetUsers.mockResolvedValue(validUsers);
+
+        const result = await getUsers();
+
+        expect(mockGetUsers).toHaveBeenCalledTimes(1);
+        expect(result).toHaveLength(2);
+        expect(result).toEqual(validUsers);
+    });
+
+    it('should return 0 users when none exist', async () => {
+        mockGetUsers.mockResolvedValue([]);
+        
+        const result = await getUsers();
+
+        expect(mockGetUsers).toHaveBeenCalledTimes(1);
+        expect(result).toHaveLength(0);
+    });
+
+    it('should handle errors thrown by getAllUsers', async () => {
+        mockGetUsers.mockRejectedValueOnce(new Error('Database error'));
+
+        await expect(getUsers()).rejects.toThrow('Failed to fetch users');
+        
+        expect(mockGetUsers).toHaveBeenCalledTimes(1);
     });
 });
