@@ -49,5 +49,9 @@ export const register = async (user: UserRequest): Promise<boolean> => {
 }
 
 export const getUsers = async () => {
-    return await getAllUsers();
+    try {
+        return await getAllUsers();
+    } catch (error) {
+        throw new Error('Failed to fetch users');
+    }
 }

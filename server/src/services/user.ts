@@ -32,10 +32,11 @@ export const createUser = async (user: UserRequest) => {
     }
 };
 
-export const getAllUsers = async() => {
+export const getAllUsers = async () => {
     try {
         return await prisma.user.findMany({});
     } catch (error) {
         console.log(error);
+        return error;
     }
 };
