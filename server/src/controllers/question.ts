@@ -1,7 +1,8 @@
 import { ReadingQuestion } from "@prisma/client";
 import { askDifferentExplanation, getQuestionTypePrompt, solveQuestionPrompt } from "../common/constants";
-import { Question } from "../common/types";
+import { AIExplanation, Question } from "../common/types";
 import { getTrainingData, buildPrompt, promptGroq, getQuestions, getReadingQuestions } from "../common/utils";
+import { saveCorrectAnswerIdx, saveExplanation } from "../common/utils/ddbb";
 
 
 // SOLVE-related controllers
@@ -27,6 +28,16 @@ const provideDifferentExplanation = async (question: string, previousAnswer: str
 };
 
 // SAVE-related endpoints
+const addExplanation = async (questionId: number | undefined, AIexplanation: AIExplanation | null) => {
+    if (AIexplanation && questionId) {
+        const { answerIdx, explanation } = AIexplanation;
+        const result = await saveExplanation(questionId, explanation);
+
+        if (result && answerIdx) {
+            return await saveCorrectAnswerIdx(questionId, answerIdx);
+        }
+    }
+};
 
 
 // GET-related endpoints
@@ -43,6 +54,7 @@ const getAllReadingQuestions = async (): Promise<ReadingQuestion[]> => {
 export {
     solveQuestion,
     provideDifferentExplanation,
+    addExplanation,
     getAllQuestions,
     getAllReadingQuestions,
 };

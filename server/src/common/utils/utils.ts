@@ -1,4 +1,6 @@
-export const AIAnswerToObject = (text: string) => {
+import { AIExplanation } from "../types";
+
+export const AIAnswerToObject = (text: string): AIExplanation | null => {
   try { // text correctly formatted as JSON
     const json = JSON.parse(text);
     return json;

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { provideDifferentExplanation, solveQuestion, getAllQuestions, getAllReadingQuestions } from '../controllers/question';
+import { provideDifferentExplanation, solveQuestion, getAllQuestions, getAllReadingQuestions, addExplanation } from '../controllers/question';
 import { AIAnswerToObject, createQuestion, createQuestionsBulk } from '../common/utils';
 import { QUESTION_REQUEST_BASE_FIELDS } from '../common/constants';
 
@@ -9,8 +9,8 @@ const router = express.Router();
 
 // SOLVE-related endpoints
 router.post('/solve', async (request, response) => {
-    const { question, questionType } = request.body;
-
+    const { questionId, question, questionType } = request.body;
+    console.log('called')
     if (!question) {
         return response.status(400).json({ error: 'Question is required' }).end();
     }
@@ -19,15 +19,17 @@ router.post('/solve', async (request, response) => {
         const answer = await solveQuestion(question, questionType);
         const answerObject = AIAnswerToObject(answer);
         
+        const r = await addExplanation(questionId, answerObject);
+        
         response.json(answerObject).end();
     } catch (error) {
         console.log(error);
-        response.status(500).json({ error: 'Failed to solve question' }).end();
+        return response.status(500).json({ error: 'Failed to solve question' }).end();
     }
 });
 
 router.post('/solve/new', async (request, response) => {
-    const { question, previousAnswer } = request.body;
+    const { questionId, question, previousAnswer } = request.body;
 
     if (!question || !previousAnswer) {
         return response.status(400).json({ error: 'Question and previous answer are required' }).end();
@@ -36,7 +38,10 @@ router.post('/solve/new', async (request, response) => {
     try {
         const explanation = await provideDifferentExplanation(question, previousAnswer);
         const explanationObject = AIAnswerToObject(explanation);
-        response.json(explanationObject).end();
+
+        const r = await addExplanation(questionId, explanationObject);
+
+        return response.json(explanationObject).end();
     } catch (error) {
         console.log(error),
         response.status(500).json({ error: 'Failed to solve question' }).end();

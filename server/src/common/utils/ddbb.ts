@@ -24,7 +24,11 @@ export const getTrainingData = async (type: string): Promise<TrainQuestion[] | T
 };
 
 export const getQuestions = async () => {
-    const questions = await prisma.question.findMany({});
+    const questions = await prisma.question.findMany({
+        include: {
+            explanations: true,
+        },
+    });
     return questions as Question[];
 };
 
@@ -83,4 +87,30 @@ export const createQuestionsBulk = async (questions: RequestFullQuestion[]) => {
         questions: newQuestions,
         errors: errorQuestions,
     };
+};
+
+export const saveCorrectAnswerIdx = async (id: number, idx: number) => {
+    try {
+        return await prisma.question.update({
+            where: { id },
+            data: { correct: idx },
+        });
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
+
+export const saveExplanation = async (questionId: number, explanation: string) => {
+    try {
+        return await prisma.explanation.create({
+            data: {
+                explanation,
+                questionId,
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
