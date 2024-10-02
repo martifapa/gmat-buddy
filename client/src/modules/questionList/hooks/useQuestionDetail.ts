@@ -6,11 +6,14 @@ import { useAppSelector } from '../../../common/hooks/redux';
 
 
 export default function useQuestionDetail(id: number) {
-  const question = useAppSelector(state => state.questions.questionBank.find(q => q.id === id));
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const question = useAppSelector(state => state.questions.questionBank.find(q => q.id === id));
+  
+  const [loading, setLoading] = useState(false);
+  
   const [explanation, setExplanation] = useState('');
   const [answer, setAnswer] = useState(-1);
+  const [explanationIdx, setExplanationIdx] = useState(-1);
 
   const parseFullQuestion = () => {
     const indexedAnswers = question?.answers.map((a, idx) => {
@@ -23,16 +26,33 @@ export default function useQuestionDetail(id: number) {
   const handleSolveQuestion = async () => {
     if (!question?.question) return;
 
-    const { answerIdx, explanation } = await solveQuestion(parseFullQuestion(), question.type);
-    setAnswer(answerIdx);
-    setExplanation(explanation);
+    // At least one explanation stored in DDBB
+    if (question.explanations.length > 0 && question.correct) {
+      const storedExplanation = question.explanations[0];
+
+      setAnswer(question.correct);
+      setExplanation(storedExplanation.explanation);
+      setExplanationIdx(0); // "start" explanationIdx counter
+    } else { // Question's explanation not stored
+      const { answerIdx, explanation } = await solveQuestion(question.id, parseFullQuestion(), question.type);
+      setAnswer(answerIdx);
+      setExplanation(explanation);
+    }
   } 
 
   const handleNewExplanation = async () => {
     if (!question?.question) return;
     
-    const { explanation: newExplanation } = await getNewAnswer(parseFullQuestion(), explanation);
-    setExplanation(newExplanation);
+    if (question.explanations.length > explanationIdx + 1) {
+      // Get next explanation
+      const storedExplanation = question.explanations[explanationIdx + 1];
+      
+      setExplanation(storedExplanation.explanation);
+      setExplanationIdx((prevIdx) => prevIdx + 1);
+    } else {
+      const { explanation: newExplanation } = await getNewAnswer(question.id, parseFullQuestion(), explanation);
+      setExplanation(newExplanation);
+    }
   }
 
   const navigateToQuestion = (idx: number) => {
