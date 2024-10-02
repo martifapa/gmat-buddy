@@ -6,20 +6,20 @@ import { authHeader } from '../common/utils';
 
 
 // SOLVE questions
-const solveQuestion = async (question: string, questionType: string): Promise<AiAnswer> => {
+const solveQuestion = async (questionId: number, question: string, questionType: string): Promise<AiAnswer> => {
     const response = await axios.post(
         `${BASE_URL}/question/solve`,
-        { question, questionType },
+        { questionId, question, questionType },
         authHeader(), // add token to headers
     );
     
     return response.data;
 };
 
-const getNewAnswer = async (question: string, previousAnswer: string): Promise<AiAnswer> => {
+const getNewAnswer = async (questionId: number, question: string, previousAnswer: string): Promise<AiAnswer> => {
     const response = await axios.post(
         `${BASE_URL}/question/solve/new`,
-        { question, previousAnswer },
+        { questionId, question, previousAnswer },
         authHeader(),
     );
     
