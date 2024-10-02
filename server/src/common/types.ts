@@ -50,6 +50,8 @@ export interface Question {
     answers: string[],
     difficulty?: string,
     readingQuestionId?: number,
+    correct?: number,
+    explanations: Explanation[],
 }
 
 export interface ReadingQuestion {
@@ -71,8 +73,21 @@ export interface RequestReadingQuestion {
     questions: RequestQuestion[],
 }
 
+export interface Explanation {
+    id: number,
+    explanation: string,
+    question: Question,
+    questionId: number,
+}
+
+export interface AIExplanation {
+    answerIdx?: number,
+    explanation: string,
+}
+
 // Union types
 export type RequestFullQuestion = RequestQuestion | RequestReadingQuestion;
+
 
 // USER
 interface UserBase {
