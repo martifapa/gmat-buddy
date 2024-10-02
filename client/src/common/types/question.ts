@@ -5,6 +5,14 @@ export interface BaseQuestion {
     type: string,
     answers: string[],
     difficulty?: string,
+    explanations: Explanation[],
+    correct: number | null,
+}
+
+export interface Explanation {
+    id: number,
+    explanation: string,
+    questionId: number,
 }
 
 export interface Question extends BaseQuestion {
