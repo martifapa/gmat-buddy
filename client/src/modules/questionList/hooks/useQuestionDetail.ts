@@ -2,11 +2,14 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import { getNewAnswer, solveQuestion } from '../../../services/question';
-import { useAppSelector } from '../../../common/hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/redux';
+import { saveExplanation } from '../../../redux/slices/question';
 
 
 export default function useQuestionDetail(id: number) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const question = useAppSelector(state => state.questions.questionBank.find(q => q.id === id));
   
   const [loading, setLoading] = useState(false);
@@ -35,6 +38,9 @@ export default function useQuestionDetail(id: number) {
       setExplanationIdx(0); // "start" explanationIdx counter
     } else { // Question's explanation not stored
       const { answerIdx, explanation } = await solveQuestion(question.id, parseFullQuestion(), question.type);
+      
+      dispatch(saveExplanation({ answerIdx, explanation, id: question.id })); // save to redux
+
       setAnswer(answerIdx);
       setExplanation(explanation);
     }
@@ -51,6 +57,9 @@ export default function useQuestionDetail(id: number) {
       setExplanationIdx((prevIdx) => prevIdx + 1);
     } else {
       const { explanation: newExplanation } = await getNewAnswer(question.id, parseFullQuestion(), explanation);
+      
+      dispatch(saveExplanation({ explanation, id: question.id })); // save to redux
+      
       setExplanation(newExplanation);
     }
   }

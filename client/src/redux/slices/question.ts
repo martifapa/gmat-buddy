@@ -38,7 +38,19 @@ export const saveQuestionsBulk = createAsyncThunk(
 const slice = createSlice({
     name: 'questions',
     initialState,
-    reducers: {},
+    reducers: {
+        saveExplanation(state, action) {
+            state.questionBank = state.questionBank.map(question =>
+                question.id === action.payload.id
+                    ? {
+                        ...question,
+                        explanations: [...question.explanations, action.payload.explanation],
+                        correct: action.payload.answerIdx ? action.payload.answerIdx : null,
+                    }
+                    : question
+            );
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchQuestions.pending, (state) => {
@@ -69,6 +81,6 @@ const slice = createSlice({
 });
 
 
-// export const {  } = slice.actions;
+export const { saveExplanation } = slice.actions;
 
 export default slice.reducer;
