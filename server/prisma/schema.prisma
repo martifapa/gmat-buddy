@@ -45,11 +45,13 @@ model TrainReadingQuestion {
 
 // Test data models
 model Question {
-  id                Int                @id @default(autoincrement())
+  id                Int               @id @default(autoincrement())
   question          String
   type              String            @default("Unknown")
   answers           String[]
   difficulty        String?
+  correct           Int?
+  explanations      Explanation[]
   readingQuestionId Int?              // Optional field to link to ReadingQuestion
   readingQuestion   ReadingQuestion?  @relation(fields: [readingQuestionId], references: [id], name: "ReadingQuestions")
 }
@@ -58,4 +60,11 @@ model ReadingQuestion {
   id          Int         @id @default(autoincrement())
   text        String
   questions   Question[]  @relation(name: "ReadingQuestions")
+}
+
+model Explanation {
+  id            Int       @id @default(autoincrement())
+  explanation   String
+  question      Question  @relation(fields: [questionId], references: [id])
+  questionId    Int
 }
