@@ -10,7 +10,7 @@ const router = express.Router();
 // SOLVE-related endpoints
 router.post('/solve', async (request, response) => {
     const { questionId, question, questionType } = request.body;
-    console.log('called')
+    
     if (!question) {
         return response.status(400).json({ error: 'Question is required' }).end();
     }
