@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import questionRouter from './routes/question';
 import trainRouter from './routes/training';
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 
 app.use('/question', auth, questionRouter);
