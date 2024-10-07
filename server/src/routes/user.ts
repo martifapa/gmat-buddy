@@ -36,6 +36,16 @@ router.post('/login', async (request, response) => {
     return loginResponse;
 });
 
+router.post('/logout', (_request, response) => {
+    response.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: false, // SET TO true ON PRODUCTION ENVIRONMENT
+        sameSite: 'strict',
+    });
+
+    return response.status(200).json({ message: 'Logged out successfully' });
+});
+
 router.post('/register', async (request, response) => {
     const user = request.body;
 
