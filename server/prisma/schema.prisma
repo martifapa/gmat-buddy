@@ -20,6 +20,8 @@ model User {
   email           String  @unique
   username        String  @unique
   password_hash   String
+  refresh_token   String?
+  expiry_date     DateTime?
 }
 
 
