@@ -41,3 +41,5 @@ export const askDifferentExplanation = `
 export const TYPE_READING = 'Verbal Reasoning - Reading Comprehension';
 
 export const QUESTION_REQUEST_BASE_FIELDS = ['question', 'answers', 'type'];
+
+export const REFRESH_TOKEN_DAYS = 10;
