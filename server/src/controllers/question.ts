@@ -36,6 +36,8 @@ const addExplanation = async (questionId: number | undefined, AIexplanation: AIE
         if (result && answerIdx) {
             return await saveCorrectAnswerIdx(questionId, answerIdx);
         }
+
+        return result;
     }
 };
 

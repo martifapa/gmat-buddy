@@ -19,7 +19,7 @@ router.post('/solve', async (request, response) => {
         const answer = await solveQuestion(question, questionType);
         const answerObject = AIAnswerToObject(answer);
         
-        const r = await addExplanation(questionId, answerObject);
+        await addExplanation(questionId, answerObject);
         
         response.json(answerObject).end();
     } catch (error) {
@@ -39,7 +39,7 @@ router.post('/solve/new', async (request, response) => {
         const explanation = await provideDifferentExplanation(question, previousAnswer);
         const explanationObject = AIAnswerToObject(explanation);
 
-        const r = await addExplanation(questionId, explanationObject);
+        await addExplanation(questionId, explanationObject);
 
         return response.json(explanationObject).end();
     } catch (error) {
