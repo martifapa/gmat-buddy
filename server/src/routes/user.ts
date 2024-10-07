@@ -1,7 +1,10 @@
 import express from 'express';
+
 import { getUsers, login, register } from '../controllers/user';
 import { auth } from '../common/middleware';
 import { findUser } from '../services/user';
+import { generateAccessToken } from '../common/utils/utils';
+import { validateRefreshToken } from '../common/utils/ddbb';
 
 
 const router = express.Router();
@@ -23,14 +26,14 @@ router.post('/login', async (request, response) => {
     if (!username || !password) {
         return response.status(400).json({ error: 'Username and password required '}).end();
     }
-
-    const user = await login(username, password);
-
-    if (!user) {
+    
+    const loginResponse = await login(username, password, response);
+    
+    if (!loginResponse) {
         return response.status(403).json({ error: 'Username not found'}).end();
     }
 
-    return response.json(user).end();
+    return loginResponse;
 });
 
 router.post('/register', async (request, response) => {
@@ -50,6 +53,25 @@ router.post('/register', async (request, response) => {
         console.log(error);
         return response.status(500).json({ error: 'Internal server error' }).end();
     }
+});
+
+router.post('/refresh-token', async (request, response) => {
+    const refreshToken = request.cookies.refreshToken;
+    
+    if (!refreshToken) {
+        return response.status(401).json({ error: 'Refresh token missing' }).end();
+    }
+
+    const user = await validateRefreshToken(refreshToken);
+
+    if (!user) {
+        return response.status(403).json({ error: 'Invalid user or refresh token' }).end();
+    }
+
+    // Generate new access token
+    const accessToken = generateAccessToken(user);
+
+    return response.json({ token: accessToken }).end();
 });
 
 
