@@ -43,7 +43,7 @@ router.post('/solve/new', async (request, response) => {
 
         return response.json(explanationObject).end();
     } catch (error) {
-        console.log(error),
+        console.log(error)
         response.status(500).json({ error: 'Failed to solve question' }).end();
     }
 });

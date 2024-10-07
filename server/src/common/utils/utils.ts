@@ -1,4 +1,7 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { AIExplanation } from "../types";
+
 
 export const AIAnswerToObject = (text: string): AIExplanation | null => {
   try { // text correctly formatted as JSON
@@ -36,4 +39,8 @@ export const parseFullQuestionType = (type: string) => {
   const types = ['Verbal Reasoning - Sentence Correction', 'Verbal Reasoning - Reading Comprehension', 'Verbal Reasoning - Critical Reasoning', 'Quantitative Reasoning - Data Sufficiency', 'Quantitative Reasoning - Problem Solving']
 
   return types.find(t => t.toLowerCase().includes(type.toLowerCase()));
+};
+
+export const generateRefreshToken = () => {
+  return uuidv4();
 };
