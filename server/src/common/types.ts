@@ -101,7 +101,7 @@ export interface UserRequest extends UserBase {
 
 export interface User extends UserBase {
     id: number,
-    passwordHash: string,
+    password_hash: string,
 }
 
 export interface CustomRequest extends Request {

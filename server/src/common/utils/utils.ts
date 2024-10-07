@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
+import jwt from 'jsonwebtoken';
 
-import { AIExplanation } from "../types";
+import { AIExplanation, User } from "../types";
+import { SECRET_KEY } from '../../config';
 
 
 export const AIAnswerToObject = (text: string): AIExplanation | null => {
@@ -40,6 +42,19 @@ export const parseFullQuestionType = (type: string) => {
 
   return types.find(t => t.toLowerCase().includes(type.toLowerCase()));
 };
+
+export const generateAccessToken = (user: User) => {
+  return jwt.sign(
+    {
+        id: user.id,
+        username: user.username,
+    },
+    SECRET_KEY,
+    {
+        expiresIn: '30 minutes',
+    }
+);
+}
 
 export const generateRefreshToken = () => {
   return uuidv4();

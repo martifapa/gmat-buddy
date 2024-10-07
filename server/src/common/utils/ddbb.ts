@@ -114,3 +114,40 @@ export const saveExplanation = async (questionId: number, explanation: string) =
         return null;
     }
 };
+
+export const saveRefreshToken = async (id: number, refreshToken: string, expiryDate: Date) => {
+    try {
+        return await prisma.user.update({
+            where: { id },
+            data: {
+                refresh_token: refreshToken,
+                expiry_date: expiryDate,
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
+
+export const validateRefreshToken = async (refreshToken: string) => {
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                refresh_token: refreshToken,
+                expiry_date: {
+                    gte: new Date,
+                },
+            },
+        });
+
+        if (user) {
+            return user;
+        }
+
+        return null;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
