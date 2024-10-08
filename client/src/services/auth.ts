@@ -1,11 +1,12 @@
 import axios from "axios";
 
+import axiosInstance from "./axiosInstance";
 import { BASE_URL } from "../common/constants";
 
 
 export const login = async (username: string, password: string) => {
     try {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             `${BASE_URL}/user/login`,
             { username, password },
         );
@@ -32,7 +33,7 @@ export const register = async (username: string, email: string, password: string
     }
 
     try {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             `${BASE_URL}/user/register`,
             { username, email, password },
         );
@@ -48,5 +49,26 @@ export const register = async (username: string, email: string, password: string
             return { error: 'An unexpected error occurred. Please try again' };
         }
     }
+};
 
+export const refreshToken = async () => {
+    try {
+        const response = await axiosInstance.post(
+            `${BASE_URL}/user/refresh-token`,
+            {},
+            { withCredentials: true, }
+        );
+        
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) { // Request made and server responded
+            if (error.response) {
+                return { error: error.response.data.error };
+            } else {
+                return { error: 'An unexpected error occurred. Please try again' };
+            }
+        } else { // Request made and server didn't respond?
+            return { error: 'An unexpected error occurred. Please try again' };
+        }
+    }
 };

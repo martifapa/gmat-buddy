@@ -1,17 +1,13 @@
-import axios from "axios";
-
+import axiosInstance from "./axiosInstance";
 import { BASE_URL } from "../common/constants";
 import { User } from "../common/types/user";
-import { authHeader } from "../common/utils";
 
 
 export const getUserInfo = async (username: string): Promise<User> => {
     try {
-        const headers = authHeader()
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             `${BASE_URL}/user`,
             { username },
-            headers,
         );
         return response.data;
     } catch (error) { // placeholder email

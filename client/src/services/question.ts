@@ -1,26 +1,22 @@
-import axios from 'axios';
-
+import axiosInstance from './axiosInstance';
 import { BASE_URL } from '../common/constants';
 import { AiAnswer, BulkQuestionsResponse, FullQuestion, FullQuestionRequest, ReadingQuestion } from '../common/types/question';
-import { authHeader } from '../common/utils';
 
 
 // SOLVE questions
 const solveQuestion = async (questionId: number, question: string, questionType: string): Promise<AiAnswer> => {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
         `${BASE_URL}/question/solve`,
         { questionId, question, questionType },
-        authHeader(), // add token to headers
     );
     
     return response.data;
 };
 
 const getNewAnswer = async (questionId: number, question: string, previousAnswer: string): Promise<AiAnswer> => {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
         `${BASE_URL}/question/solve/new`,
         { questionId, question, previousAnswer },
-        authHeader(),
     );
     
     return response.data;
@@ -29,9 +25,8 @@ const getNewAnswer = async (questionId: number, question: string, previousAnswer
 // GET questions
 const getAllQuestions = async (): Promise<FullQuestion[]> => {
     try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
             `${BASE_URL}/question/all`,
-            authHeader(),
         );
         
         return response.data;
@@ -42,10 +37,8 @@ const getAllQuestions = async (): Promise<FullQuestion[]> => {
 };
 
 const getAllReadingQuestions = async (): Promise<ReadingQuestion[]> => {
-    const headers = authHeader();
-    const response = await axios.get(
+    const response = await axiosInstance.get(
         `${BASE_URL}/question/all/reading`,
-        headers,
     );
 
     return response.data;
@@ -53,20 +46,18 @@ const getAllReadingQuestions = async (): Promise<ReadingQuestion[]> => {
 
 // CREATE questions
 const createQuestion = async (questionRequest: FullQuestionRequest): Promise<FullQuestion> => {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
         `${BASE_URL}/question/save/one`,
         questionRequest,
-        authHeader(),
     );
 
     return response.data;
 }
 
 const createQuestionsBulk = async (questions: FullQuestionRequest[]): Promise<BulkQuestionsResponse> => {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
         `${BASE_URL}/question/save/list`,
         questions,
-        authHeader(),
     );
     
     return response.data;
