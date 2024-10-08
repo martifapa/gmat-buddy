@@ -27,6 +27,8 @@ export default function useAuth() {
     
     const handleLogout = () => {
         dispatch(logout());
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('username');
     }
 
     const handleLogin = async (event: SyntheticEvent | null = null) => {
@@ -34,17 +36,10 @@ export default function useAuth() {
         const { token, error } = await login(username, password);
         
         if (token) { // login successful
-          // Save to redux slices
-          dispatch(saveToken(token)); // authSlice
-          dispatch(setUser(await getUserInfo(username))); // userSlice
-          // fetch reading and non-reading questions
-          dispatch(fetchQuestions());
-          dispatch(fetchReadingQuestions());
-          // Redirect
-          navigate('/');
+            loginActions(token, username);
         } else {
             toast(ERROR, error);
-        }  
+        }
     };
 
     const handleRegister = async (event: SyntheticEvent) => {
@@ -56,6 +51,20 @@ export default function useAuth() {
         } else {
             toast(ERROR, error);
         }
+    }
+
+    const loginActions = async (token: string, username: string) => {
+        localStorage.setItem('accessToken', token);
+        localStorage.setItem('username', username);
+
+        // Save to redux slices
+        dispatch(saveToken(token)); // authSlice
+        dispatch(setUser(await getUserInfo(username))); // userSlice
+        // fetch reading and non-reading questions
+        dispatch(fetchQuestions());
+        dispatch(fetchReadingQuestions());
+        // Redirect
+        navigate('/');
     }
 
     return {
@@ -75,5 +84,6 @@ export default function useAuth() {
         logout: handleLogout,
         login: handleLogin,
         register: handleRegister,
+        refreshLogin: loginActions,
     }
 };
