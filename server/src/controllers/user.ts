@@ -29,8 +29,8 @@ export const login = async (username: string, password: string, response: Respon
         // Set refresh token in an HTTP-only cookie
         response.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: false, // SET TO true ON PRODUCTION ENVIRONMENT
-            sameSite: 'strict',
+            secure: false,      // SET TO true ON PRODUCTION ENVIRONMENT
+            sameSite: 'lax',    // SET TO strict ON PRODUCTION ENVIRONMENT
             expires: refreshTokenExpiry,
         });
 
